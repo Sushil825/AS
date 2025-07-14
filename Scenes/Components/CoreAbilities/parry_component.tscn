@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dt0amq5jkp32s"]
+
+[ext_resource type="Script" uid="uid://b7pywml3u85jn" path="res://Scenes/Components/CoreAbilities/parry_component.gd" id="1_7fxkg"]
+
+[node name="ParryComponent" type="Node"]
+script = ExtResource("1_7fxkg")

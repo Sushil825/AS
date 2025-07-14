@@ -1,0 +1,204 @@
+[gd_scene load_steps=30 format=3 uid="uid://cou2lca40qdxl"]
+
+[ext_resource type="Texture2D" uid="uid://pttpo6wfmcsq" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_4ffj5"]
+[ext_resource type="Script" uid="uid://dj0lg7bkycc4m" path="res://Scenes/Entities/Player/player.gd" id="1_rx582"]
+[ext_resource type="Texture2D" uid="uid://dq23t14l2g002" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Attack-01/Attack-01-Sheet.png" id="2_i4twt"]
+[ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="2_rx582"]
+[ext_resource type="Script" uid="uid://dlf30ooli6jr" path="res://Scenes/Components/health_component.gd" id="3_rx582"]
+[ext_resource type="Script" uid="uid://bh04okmk0y7f" path="res://Scenes/Components/CoreAbilities/dodge_component.gd" id="4_y6hyn"]
+[ext_resource type="Script" uid="uid://c60wdk640jber" path="res://Scenes/Components/CoreAbilities/dash_component.gd" id="5_75l7y"]
+[ext_resource type="Script" uid="uid://b7pywml3u85jn" path="res://Scenes/Components/CoreAbilities/parry_component.gd" id="6_5o8lj"]
+[ext_resource type="Script" uid="uid://c0aresow0k4hg" path="res://Scenes/Components/WeaponAttack/attack_component.gd" id="7_75l7y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8fdp"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(0, 0, 96, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0yfgq"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(96, 0, 96, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fwr3"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(192, 0, 96, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pc8mt"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(288, 0, 96, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p22ti"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(384, 0, 96, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkmxn"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(480, 0, 96, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtr04"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(576, 0, 96, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oedhw"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(672, 0, 96, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22fhq"]
+atlas = ExtResource("1_4ffj5")
+region = Rect2(0, 0, 64, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcpig"]
+atlas = ExtResource("1_4ffj5")
+region = Rect2(64, 0, 64, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6hyn"]
+atlas = ExtResource("1_4ffj5")
+region = Rect2(128, 0, 64, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75l7y"]
+atlas = ExtResource("1_4ffj5")
+region = Rect2(192, 0, 64, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4doi"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(0, 0, 96, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6pm8"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(384, 0, 96, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fd7sw"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(480, 0, 96, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o25qk"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(576, 0, 96, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvxs1"]
+atlas = ExtResource("2_i4twt")
+region = Rect2(672, 0, 96, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5o8lj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8fdp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0yfgq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fwr3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pc8mt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p22ti")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hkmxn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtr04")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oedhw")
+}],
+"loop": true,
+"name": &"heavy_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22fhq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fcpig")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y6hyn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75l7y")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4doi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l6pm8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fd7sw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o25qk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bvxs1")
+}],
+"loop": true,
+"name": &"light_attack",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ffj5"]
+height = 48.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rx582"]
+radius = 11.0
+height = 52.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_rx582")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_5o8lj")
+animation = &"heavy_attack"
+autoplay = "idle"
+frame_progress = 0.943204
+
+[node name="HurtBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
+script = ExtResource("2_rx582")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://cbljtbydq410e"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_4ffj5")
+debug_color = Color(0.837217, 0.344382, 0.465004, 0.42)
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_rx582")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("3_rx582")
+metadata/_custom_type_script = "uid://dlf30ooli6jr"
+
+[node name="CoreAbilities" type="Node" parent="."]
+
+[node name="DodgeComponent" type="Node" parent="CoreAbilities"]
+script = ExtResource("4_y6hyn")
+metadata/_custom_type_script = "uid://bh04okmk0y7f"
+
+[node name="DashComponent" type="Node" parent="CoreAbilities"]
+script = ExtResource("5_75l7y")
+metadata/_custom_type_script = "uid://c60wdk640jber"
+
+[node name="ParryComponent" type="Node" parent="CoreAbilities"]
+script = ExtResource("6_5o8lj")
+metadata/_custom_type_script = "uid://b7pywml3u85jn"
+
+[node name="AttackComponent" type="Node" parent="."]
+script = ExtResource("7_75l7y")
+metadata/_custom_type_script = "uid://c0aresow0k4hg"
