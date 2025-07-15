@@ -1,13 +1,15 @@
-[gd_scene load_steps=30 format=3 uid="uid://cou2lca40qdxl"]
+[gd_scene load_steps=40 format=3 uid="uid://cou2lca40qdxl"]
 
 [ext_resource type="Texture2D" uid="uid://pttpo6wfmcsq" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_4ffj5"]
 [ext_resource type="Script" uid="uid://dj0lg7bkycc4m" path="res://Scenes/Entities/Player/player.gd" id="1_rx582"]
 [ext_resource type="Texture2D" uid="uid://dq23t14l2g002" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Attack-01/Attack-01-Sheet.png" id="2_i4twt"]
 [ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="2_rx582"]
 [ext_resource type="Script" uid="uid://dlf30ooli6jr" path="res://Scenes/Components/health_component.gd" id="3_rx582"]
+[ext_resource type="Texture2D" uid="uid://ilfgidbd63yk" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Run/Run-Sheet.png" id="4_0yfgq"]
 [ext_resource type="Script" uid="uid://bh04okmk0y7f" path="res://Scenes/Components/CoreAbilities/dodge_component.gd" id="4_y6hyn"]
 [ext_resource type="Script" uid="uid://c60wdk640jber" path="res://Scenes/Components/CoreAbilities/dash_component.gd" id="5_75l7y"]
 [ext_resource type="Script" uid="uid://b7pywml3u85jn" path="res://Scenes/Components/CoreAbilities/parry_component.gd" id="6_5o8lj"]
+[ext_resource type="Script" uid="uid://x2gfe5eqhe3q" path="res://Scenes/Components/Movements/movement_component.gd" id="6_q8fdp"]
 [ext_resource type="Script" uid="uid://c0aresow0k4hg" path="res://Scenes/Components/WeaponAttack/attack_component.gd" id="7_75l7y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q8fdp"]
@@ -78,6 +80,38 @@ region = Rect2(576, 0, 96, 80)
 atlas = ExtResource("2_i4twt")
 region = Rect2(672, 0, 96, 80)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_nr3lb"]
+atlas = ExtResource("4_0yfgq")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5nyj"]
+atlas = ExtResource("4_0yfgq")
+region = Rect2(80, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7dcmg"]
+atlas = ExtResource("4_0yfgq")
+region = Rect2(160, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mt20e"]
+atlas = ExtResource("4_0yfgq")
+region = Rect2(240, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50st8"]
+atlas = ExtResource("4_0yfgq")
+region = Rect2(320, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ee1x"]
+atlas = ExtResource("4_0yfgq")
+region = Rect2(400, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wl017"]
+atlas = ExtResource("4_0yfgq")
+region = Rect2(480, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sajyx"]
+atlas = ExtResource("4_0yfgq")
+region = Rect2(560, 0, 80, 80)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_5o8lj"]
 animations = [{
 "frames": [{
@@ -105,9 +139,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oedhw")
 }],
-"loop": true,
+"loop": false,
 "name": &"heavy_attack",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -124,7 +158,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -142,9 +176,38 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bvxs1")
 }],
-"loop": true,
+"loop": false,
 "name": &"light_attack",
-"speed": 5.0
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nr3lb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u5nyj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7dcmg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mt20e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50st8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ee1x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wl017")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sajyx")
+}],
+"loop": false,
+"name": &"run",
+"speed": 10.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ffj5"]
@@ -155,13 +218,13 @@ radius = 11.0
 height = 52.0
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 2
 script = ExtResource("1_rx582")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5o8lj")
-animation = &"heavy_attack"
+animation = &"run"
 autoplay = "idle"
-frame_progress = 0.943204
 
 [node name="HurtBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
 script = ExtResource("2_rx582")
@@ -184,6 +247,10 @@ zoom = Vector2(2, 2)
 [node name="HealthComponent" type="Node2D" parent="."]
 script = ExtResource("3_rx582")
 metadata/_custom_type_script = "uid://dlf30ooli6jr"
+
+[node name="MovementComponent" type="Node2D" parent="." node_paths=PackedStringArray("Player")]
+script = ExtResource("6_q8fdp")
+Player = NodePath("..")
 
 [node name="CoreAbilities" type="Node" parent="."]
 
