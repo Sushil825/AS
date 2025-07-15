@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AttackData" load_steps=2 format=3 uid="uid://d2ugprfvgg05p"]
+
+[ext_resource type="Script" uid="uid://bt2stluxt8sqw" path="res://Resources/AttackData.gd" id="1_ikdh6"]
+
+[resource]
+script = ExtResource("1_ikdh6")
+damage = 25.0
+type = 1
+range = 30.0
+knockback_force = 2.0
+animation_name = ""
+metadata/_custom_type_script = "uid://bt2stluxt8sqw"

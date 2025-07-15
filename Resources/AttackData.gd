@@ -13,3 +13,5 @@ enum Type{
 @export var knockback_force:float
 @export var animation_name:String
 @export var sound_effect:AudioStream
+@export var can_be_parried:bool=true
+@export var can_be_dodged:bool=true
