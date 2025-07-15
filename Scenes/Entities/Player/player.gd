@@ -3,7 +3,8 @@ extends CharacterBody2D
 @onready var parry_component: ParryComponent = $CoreAbilities/ParryComponent
 @onready var attack_component: AttackComponent = $AttackComponent
 @onready var dodge_component: DodgeComponent = $CoreAbilities/DodgeComponent
-var direction:Vector2=Vector2.RIGHT
+
+@export var direction: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	#Connect all the signal from the components
