@@ -7,3 +7,4 @@ class_name WeaponResource
 @export var light_attack_speed:float=1.0
 @export var heavy_attack_speed:float=0.5
 @export var attack_range:float=50.0
+@export var damage_multiplier:float=1

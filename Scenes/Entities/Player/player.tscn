@@ -223,7 +223,7 @@ script = ExtResource("1_rx582")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5o8lj")
-animation = &"run"
+animation = &"light_attack"
 autoplay = "idle"
 
 [node name="HurtBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
