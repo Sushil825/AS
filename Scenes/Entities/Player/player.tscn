@@ -213,9 +213,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s1342")
 }],
-"loop": true,
+"loop": false,
 "name": &"in_air",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -227,9 +227,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j1kkw")
 }],
-"loop": true,
+"loop": false,
 "name": &"jump_end",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -244,9 +244,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qy61i")
 }],
-"loop": true,
+"loop": false,
 "name": &"jump_start",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -303,7 +303,7 @@ height = 48.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rx582"]
 radius = 11.0
-height = 52.0
+height = 54.0
 
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
@@ -313,7 +313,7 @@ script = ExtResource("1_rx582")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_5o8lj")
-animation = &"jump_end"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="HurtBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
@@ -327,18 +327,17 @@ shape = SubResource("CapsuleShape2D_4ffj5")
 debug_color = Color(0.837217, 0.344382, 0.465004, 0.42)
 
 [node name="Shape" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_rx582")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
 position_smoothing_enabled = true
 
-[node name="MovementComponent" type="Node2D" parent="." node_paths=PackedStringArray("Player", "Jump_Buffer")]
+[node name="MovementComponent" type="Node2D" parent="." node_paths=PackedStringArray("Player", "Jump_Buffer", "Animations_node")]
 script = ExtResource("6_q8fdp")
 Player = NodePath("..")
 Jump_Buffer = NodePath("Jump_buffer")
+Animations_node = NodePath("../AnimatedSprite2D")
 metadata/_custom_type_script = "uid://x2gfe5eqhe3q"
 
 [node name="Jump_buffer" type="Timer" parent="MovementComponent"]

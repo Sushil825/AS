@@ -4,6 +4,7 @@ class_name MovementComponent
 
 @export var Player : CharacterBody2D
 @export var Jump_Buffer : Timer
+@export var Animations_node : AnimatedSprite2D
 
 @export var speed : int = 200
 @export var acceleration : int = 700
@@ -12,12 +13,23 @@ class_name MovementComponent
 @export var gravity : int = 800
 @export var terminal_velocity : int = 500
 
+@onready var Animations : AnimatedSprite2D = Animations_node
+
 var direction : Vector2 = Vector2.ZERO
 var jump: bool = false
 var faster_fall : bool = false
 
 func get_direction() -> Vector2:
 	return direction
+
+func is_Jumping() -> bool:
+	return Player.velocity.y < 0 and not Player.is_on_floor()
+
+func is_in_air() -> bool:
+	return Player.velocity.y > 0 and not Player.is_on_floor()
+
+func is_on_ground() -> bool:
+	return not is_Jumping() and Player.is_on_floor()
 
 func _process(delta: float) -> void:
 	#gravity
