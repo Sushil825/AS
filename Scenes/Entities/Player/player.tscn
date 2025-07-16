@@ -205,7 +205,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sajyx")
 }],
-"loop": false,
+"loop": true,
 "name": &"run",
 "speed": 10.0
 }]
@@ -218,12 +218,14 @@ radius = 11.0
 height = 52.0
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 2
+texture_filter = 1
+collision_mask = 6
 script = ExtResource("1_rx582")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_5o8lj")
-animation = &"light_attack"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="HurtBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
@@ -242,15 +244,22 @@ position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_rx582")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
+zoom = Vector2(3, 3)
+position_smoothing_enabled = true
+
+[node name="MovementComponent" type="Node2D" parent="." node_paths=PackedStringArray("Player", "Jump_Buffer")]
+script = ExtResource("6_q8fdp")
+Player = NodePath("..")
+Jump_Buffer = NodePath("Jump_buffer")
+metadata/_custom_type_script = "uid://x2gfe5eqhe3q"
+
+[node name="Jump_buffer" type="Timer" parent="MovementComponent"]
+wait_time = 0.25
+one_shot = true
 
 [node name="HealthComponent" type="Node2D" parent="."]
 script = ExtResource("3_rx582")
 metadata/_custom_type_script = "uid://dlf30ooli6jr"
-
-[node name="MovementComponent" type="Node2D" parent="." node_paths=PackedStringArray("Player")]
-script = ExtResource("6_q8fdp")
-Player = NodePath("..")
 
 [node name="CoreAbilities" type="Node" parent="."]
 
