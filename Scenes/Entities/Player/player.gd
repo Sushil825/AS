@@ -7,6 +7,7 @@ enum PlayerState{
 	IDLE,
 	MOVING,
 	ATTACKING,
+	JUMPING,
 	DASHING,
 	DODGING,
 	PARRYING,
@@ -19,10 +20,8 @@ enum PlayerState{
 @onready var dodge_component: DodgeComponent = $CoreAbilities/DodgeComponent
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var movement_component: Node2D = $MovementComponent
-
-
 @export var direction: Vector2 = Vector2.ZERO
-
+@export var debug_mode:bool=false
 
 var current_state:PlayerState=PlayerState.IDLE
 var previous_state:PlayerState=PlayerState.IDLE
@@ -40,8 +39,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	
 	_get_input_direction()
+	if debug_mode:
+		print("Current_State: ",PlayerState.keys()[current_state],
+				"Is Attacking: ",attack_component.get_is_attacking())
 	
 	match current_state:
 		PlayerState.IDLE:
@@ -65,22 +66,26 @@ func _get_input_direction():
 
 
 func enter_state(state:PlayerState):
+	if debug_mode:
+		print("Entering State: ",PlayerState.keys()[state])
 	match state:
 		PlayerState.IDLE:
 			animated_sprite_2d.play("idle")
 		PlayerState.MOVING:
-			if direction==Vector2.LEFT:
-				
+			if direction.x<0:
 				animated_sprite_2d.play("run")
 				animated_sprite_2d.flip_h=true
-			elif direction==Vector2.RIGHT:
+			elif direction.x>0:
 				
 				animated_sprite_2d.play("run")
 				animated_sprite_2d.flip_h=false
 		PlayerState.ATTACKING:
 			pass
+		
 
 func exit_state(state:PlayerState):
+	if debug_mode:
+		print("Exiting State: ",PlayerState.keys()[state])
 	match state:
 		PlayerState.PARRYING:
 			pass
@@ -102,12 +107,13 @@ func _input(event: InputEvent) -> void:
 		PlayerState.IDLE,PlayerState.MOVING:
 			
 			if event.is_action_pressed("light_attack"):
-				change_state(PlayerState.ATTACKING)
-				attack_component.perform_light_attack()
-				
+				if attack_component.can_attack():
+					change_state(PlayerState.ATTACKING)
+					attack_component.perform_light_attack()
 			elif event.is_action_pressed("heavy_attack"):
-				change_state(PlayerState.ATTACKING)
-				attack_component.perform_heavy_attack()
+				if attack_component.can_attack():
+					change_state(PlayerState.ATTACKING)
+					attack_component.perform_heavy_attack()
 			elif event.is_action_pressed("dash"):
 				change_state(PlayerState.DASHING)
 				dash_component.peerform_dash(direction)
@@ -139,7 +145,8 @@ func handle_moving_state():
 		change_state(PlayerState.IDLE)
 	
 func handle_attacking_state():
-	pass
+	if attack_component.can_attack() and attack_component.is_attacking==false:
+		change_state(PlayerState.IDLE)
 	
 func handle_dashing_state():
 	pass
@@ -170,6 +177,8 @@ func _on_parry_successful(attacker):
 	pass
 
 func _on_attack_finished():
+	if debug_mode:
+		print("Attack Finished signal received")
 	if movement_component.get_direction().length()>0:
 		change_state(PlayerState.MOVING)
 	else:

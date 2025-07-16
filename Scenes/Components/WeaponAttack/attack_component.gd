@@ -7,9 +7,9 @@ signal attack_finished()
 
 @export var light_attack_dmg:float=10.0
 @export var heavy_attack_dmg:float=25.0
-@export var light_attack_duration:float=0.3
-@export var heavy_attack_duration:float=0.5
-@export var light_attack_cooldown:float=0.2
+@export var light_attack_duration:float=0.5
+@export var heavy_attack_duration:float=0.8
+@export var light_attack_cooldown:float=0.8
 @export var heavy_attack_cooldown:float=0.3
 @export var attack_range:float=50.0
 var can_light_attack:bool=true
@@ -22,13 +22,14 @@ var current_weapon:WeaponResource
 #Attack Timers
 var light_cooldown_timer:Timer
 var heavy_cooldown_timer:Timer
+var attack_duration_timer:Timer
 
 
 
 func _ready() -> void:
 	
 	light_cooldown_timer=Timer.new()
-	light_cooldown_timer.wait_time=light_attack_duration
+	light_cooldown_timer.wait_time=light_attack_cooldown
 	light_cooldown_timer.one_shot=true
 	light_cooldown_timer.timeout.connect(_on_light_cooldown_finished)
 	add_child(light_cooldown_timer)
@@ -39,7 +40,10 @@ func _ready() -> void:
 	heavy_cooldown_timer.timeout.connect(_on_heavy_cooldown_finished)
 	add_child(heavy_cooldown_timer)
 	
-	
+	attack_duration_timer=Timer.new()
+	attack_duration_timer.one_shot=true
+	attack_duration_timer.timeout.connect(_on_attack_duration_finished)
+	add_child(attack_duration_timer)
 
 func perform_light_attack():
 	if not can_light_attack or is_attacking:
@@ -62,12 +66,10 @@ func perform_light_attack():
 	attack_performed.emit(attack_data)
 	
 	
-	await get_tree().create_timer(light_attack_duration).timeout
-	_finish_attack()
-	light_cooldown_timer.start()
+	attack_duration_timer.wait_time=light_attack_duration
+	attack_duration_timer.start()
+	
 	return true
-	
-	
 func perform_heavy_attack():
 	
 	if not can_heavy_attack or is_attacking:
@@ -88,13 +90,19 @@ func perform_heavy_attack():
 	attack_performed.emit(attack_data)
 	
 	
-	await get_tree().create_timer(heavy_attack_duration).timeout
-	_finish_attack()
-	heavy_cooldown_timer.start()
+	attack_duration_timer.wait_time=heavy_attack_duration
+	attack_duration_timer.start()
 	return true
 
 
-func _finish_attack():
+func _on_attack_duration_finished():
+	finish_attack()
+	if not can_light_attack:
+		light_cooldown_timer.start()
+	if not can_heavy_attack:
+		heavy_cooldown_timer.start()
+
+func finish_attack():
 	is_attacking=false
 	attack_finished.emit()
 	
@@ -109,16 +117,11 @@ func _on_heavy_cooldown_finished():
 func cancel_attack():
 	if is_attacking:
 		is_attacking=false
+		attack_duration_timer.stop()
 		attack_finished.emit()
 		
 func can_attack()->bool:
-	if not is_attacking:
-		if can_light_attack or can_heavy_attack:
-			return true
-		else:
-			return false
-	else:
-		return false
+	return not is_attacking and(can_light_attack or can_heavy_attack)
 		
 		
 func get_is_attacking()->bool:

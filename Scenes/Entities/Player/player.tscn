@@ -1,13 +1,16 @@
-[gd_scene load_steps=40 format=3 uid="uid://cou2lca40qdxl"]
+[gd_scene load_steps=53 format=3 uid="uid://cou2lca40qdxl"]
 
 [ext_resource type="Texture2D" uid="uid://pttpo6wfmcsq" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_4ffj5"]
 [ext_resource type="Script" uid="uid://dj0lg7bkycc4m" path="res://Scenes/Entities/Player/player.gd" id="1_rx582"]
 [ext_resource type="Texture2D" uid="uid://dq23t14l2g002" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Attack-01/Attack-01-Sheet.png" id="2_i4twt"]
 [ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="2_rx582"]
 [ext_resource type="Script" uid="uid://dlf30ooli6jr" path="res://Scenes/Components/health_component.gd" id="3_rx582"]
+[ext_resource type="Texture2D" uid="uid://cy6oa5058are5" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Jump-Start/Jump-Start-Sheet.png" id="4_0fwr3"]
 [ext_resource type="Texture2D" uid="uid://ilfgidbd63yk" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Run/Run-Sheet.png" id="4_0yfgq"]
+[ext_resource type="Texture2D" uid="uid://cnxobqfoxii6i" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Jumlp-All/Jump-All-Sheet.png" id="4_p22ti"]
 [ext_resource type="Script" uid="uid://bh04okmk0y7f" path="res://Scenes/Components/CoreAbilities/dodge_component.gd" id="4_y6hyn"]
 [ext_resource type="Script" uid="uid://c60wdk640jber" path="res://Scenes/Components/CoreAbilities/dash_component.gd" id="5_75l7y"]
+[ext_resource type="Texture2D" uid="uid://bm4ga3y8tn358" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Jump-End/Jump-End-Sheet.png" id="5_hkmxn"]
 [ext_resource type="Script" uid="uid://b7pywml3u85jn" path="res://Scenes/Components/CoreAbilities/parry_component.gd" id="6_5o8lj"]
 [ext_resource type="Script" uid="uid://x2gfe5eqhe3q" path="res://Scenes/Components/Movements/movement_component.gd" id="6_q8fdp"]
 [ext_resource type="Script" uid="uid://c0aresow0k4hg" path="res://Scenes/Components/WeaponAttack/attack_component.gd" id="7_75l7y"]
@@ -59,6 +62,46 @@ region = Rect2(128, 0, 64, 80)
 [sub_resource type="AtlasTexture" id="AtlasTexture_75l7y"]
 atlas = ExtResource("1_4ffj5")
 region = Rect2(192, 0, 64, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d82u1"]
+atlas = ExtResource("4_p22ti")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8mwgt"]
+atlas = ExtResource("4_p22ti")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s1342"]
+atlas = ExtResource("4_p22ti")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4hte"]
+atlas = ExtResource("5_hkmxn")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xseyh"]
+atlas = ExtResource("5_hkmxn")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1kkw"]
+atlas = ExtResource("5_hkmxn")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fme60"]
+atlas = ExtResource("4_0fwr3")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fb3ol"]
+atlas = ExtResource("4_0fwr3")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4n6s"]
+atlas = ExtResource("4_0fwr3")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qy61i"]
+atlas = ExtResource("4_0fwr3")
+region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s4doi"]
 atlas = ExtResource("2_i4twt")
@@ -162,6 +205,51 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_d82u1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8mwgt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s1342")
+}],
+"loop": true,
+"name": &"in_air",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4hte")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xseyh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1kkw")
+}],
+"loop": true,
+"name": &"jump_end",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fme60")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fb3ol")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4n6s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qy61i")
+}],
+"loop": true,
+"name": &"jump_start",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_s4doi")
 }, {
 "duration": 1.0,
@@ -225,7 +313,7 @@ script = ExtResource("1_rx582")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_5o8lj")
-animation = &"idle"
+animation = &"jump_end"
 autoplay = "idle"
 
 [node name="HurtBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
