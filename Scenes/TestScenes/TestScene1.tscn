@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=4 uid="uid://2hay2vh1ir1b"]
+[gd_scene load_steps=7 format=4 uid="uid://2hay2vh1ir1b"]
 
 [ext_resource type="PackedScene" uid="uid://cou2lca40qdxl" path="res://Scenes/Entities/Player/player.tscn" id="1_4qg1y"]
 [ext_resource type="Texture2D" uid="uid://c0a5vbcsj3jgf" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Assets/Buildings.png" id="1_pj2ya"]
 [ext_resource type="PackedScene" uid="uid://cxgrpymmn2brt" path="res://Scenes/Entities/Enemies/snail.tscn" id="3_i0cdd"]
+[ext_resource type="PackedScene" uid="uid://ds7qx80opjy4a" path="res://Scenes/TileSet/terrain_layer.tscn" id="4_efet3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i0cdd"]
 texture = ExtResource("1_pj2ya")
@@ -392,3 +393,6 @@ position = Vector2(-25, 1)
 
 [node name="Snail" parent="." instance=ExtResource("3_i0cdd")]
 position = Vector2(144, 4)
+
+[node name="TerrainLayer" parent="." instance=ExtResource("4_efet3")]
+tile_map_data = PackedByteArray()
