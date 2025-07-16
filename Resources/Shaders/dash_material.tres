@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d1q7ddmemlsgn"]
+
+[ext_resource type="Shader" uid="uid://c00ro3tod4fwa" path="res://Resources/Shaders/dash_effect_shader.gdshader" id="1_ej0ww"]
+
+[resource]
+shader = ExtResource("1_ej0ww")
+shader_parameter/dash_intensity = 0.0
+shader_parameter/trail_length = 0.5
+shader_parameter/dash_color = Color(0, 0.5, 1, 1)
+shader_parameter/flicker_speed = 10.0

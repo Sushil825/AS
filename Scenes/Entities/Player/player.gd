@@ -19,7 +19,7 @@ enum PlayerState{
 @onready var attack_component: AttackComponent = $AttackComponent
 @onready var dodge_component: DodgeComponent = $CoreAbilities/DodgeComponent
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-@onready var movement_component: Node2D = $MovementComponent
+@onready var movement_component: MovementComponent = $MovementComponent
 @export var direction: Vector2 = Vector2.ZERO
 @export var debug_mode:bool=false
 
@@ -29,16 +29,18 @@ var previous_state:PlayerState=PlayerState.IDLE
 
 func _ready() -> void:
 	#Connect all the signal from the components
-	
 	attack_component.attack_performed.connect(_on_attack_performed)
 	attack_component.attack_finished.connect(_on_attack_finished)
 	dash_component.dash_started.connect(_on_dash_started)
+	dash_component.dash_ended.connect(_on_dash_ended)
 	dodge_component.dodge_started.connect(_on_dodge_started)
+	dodge_component.dodge_ended.connect(_on_dodge_ended)
 	parry_component.parry_successful.connect(_on_parry_successful)
 
 
 
 func _physics_process(delta: float) -> void:
+	
 	_get_input_direction()
 	if debug_mode:
 		print("Current_State: ",PlayerState.keys()[current_state],
@@ -59,6 +61,8 @@ func _physics_process(delta: float) -> void:
 			handle_parrying_state()
 		PlayerState.STUNNED:
 			handle_stunned_state()
+		PlayerState.JUMPING:
+			handle_jumping_state()
 
 
 func _get_input_direction():
@@ -72,16 +76,20 @@ func enter_state(state:PlayerState):
 		PlayerState.IDLE:
 			animated_sprite_2d.play("idle")
 		PlayerState.MOVING:
-			if direction.x<0:
-				animated_sprite_2d.play("run")
-				animated_sprite_2d.flip_h=true
-			elif direction.x>0:
-				
-				animated_sprite_2d.play("run")
-				animated_sprite_2d.flip_h=false
+			animated_sprite_2d.flip_h = true if direction.x < 0 else false
+			animated_sprite_2d.play("run")
 		PlayerState.ATTACKING:
 			pass
-		
+		PlayerState.JUMPING:
+			animated_sprite_2d.flip_h = true if direction.x < 0 else false
+			#Checking jump states in order
+			
+			if movement_component.is_on_ground() and movement_component.just_landed():
+				animated_sprite_2d.play("jump_end")
+			elif movement_component.is_in_air():
+				animated_sprite_2d.play("in_air")
+			elif movement_component.is_Jumping() or movement_component.just_jumped():
+				animated_sprite_2d.play("jump_start")
 
 func exit_state(state:PlayerState):
 	if debug_mode:
@@ -116,10 +124,10 @@ func _input(event: InputEvent) -> void:
 					attack_component.perform_heavy_attack()
 			elif event.is_action_pressed("dash"):
 				change_state(PlayerState.DASHING)
-				dash_component.peerform_dash(direction)
+				dash_component.perform_dash(direction)
 			elif event.is_action_pressed("dodge"):
 				change_state(PlayerState.DODGING)
-				dodge_component.peerform_dodge()
+				dodge_component.perform_dodge()
 			elif event.is_action_pressed("parry"):
 				change_state(PlayerState.PARRYING)
 				parry_component.attempt_parry()
@@ -129,10 +137,8 @@ func _input(event: InputEvent) -> void:
 				if dash_component.can_dash:
 					attack_component.cancel_attack()
 					change_state(PlayerState.DASHING)
-					dash_component.peerform_dash(direction)
+					dash_component.perform_dash(direction)
 					
-
-
 
 #Handling Idle state
 
@@ -140,13 +146,22 @@ func handle_idle_state():
 	if movement_component.get_direction().length()>0:
 		change_state(PlayerState.MOVING)
 	
+	if movement_component.is_Jumping():
+		change_state(PlayerState.JUMPING)
+	
 func handle_moving_state():
 	if movement_component.get_direction().length()==0:
 		change_state(PlayerState.IDLE)
 	
+	if movement_component.is_Jumping():
+		change_state(PlayerState.JUMPING)
+	
 func handle_attacking_state():
 	if attack_component.can_attack() and attack_component.is_attacking==false:
 		change_state(PlayerState.IDLE)
+	
+	if movement_component.is_Jumping():
+		change_state(PlayerState.JUMPING)
 	
 func handle_dashing_state():
 	pass
@@ -160,6 +175,14 @@ func handle_parrying_state():
 func handle_stunned_state():
 	pass
 
+func handle_jumping_state():
+	if movement_component.is_on_ground():
+		if movement_component.get_direction().length()>0:
+			change_state(PlayerState.MOVING)
+		
+		if movement_component.get_direction().length()==0:
+			change_state(PlayerState.IDLE)
+
 func _on_attack_performed(attack_data):
 	match attack_data.type:
 		AttackData.Type.LIGHT:
@@ -169,10 +192,16 @@ func _on_attack_performed(attack_data):
 	
 func _on_dash_started():
 	pass
-	
+
+func _on_dash_ended():
+	change_state(PlayerState.IDLE)
+
 func _on_dodge_started():
 	pass
-	
+
+func _on_dodge_ended():
+	change_state(PlayerState.IDLE)
+
 func _on_parry_successful(attacker):
 	pass
 

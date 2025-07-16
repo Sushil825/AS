@@ -1,0 +1,130 @@
+[gd_scene load_steps=19 format=3 uid="uid://sja4gr0plns4"]
+
+[ext_resource type="Texture2D" uid="uid://dtnmem8b1576e" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Small Bee/Attack/Attack-Sheet.png" id="1_a0lnj"]
+[ext_resource type="Texture2D" uid="uid://cjr8vdj6qehdn" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Small Bee/Fly/Fly-Sheet.png" id="1_bogrk"]
+[ext_resource type="Texture2D" uid="uid://bo1rb3agqtj0q" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Small Bee/Hit/Hit-Sheet.png" id="3_mk7hq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gv4wh"]
+atlas = ExtResource("1_a0lnj")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ji5m4"]
+atlas = ExtResource("1_a0lnj")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o54ra"]
+atlas = ExtResource("1_a0lnj")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tihq5"]
+atlas = ExtResource("1_a0lnj")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkydl"]
+atlas = ExtResource("1_bogrk")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0lnj"]
+atlas = ExtResource("1_bogrk")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk7hq"]
+atlas = ExtResource("1_bogrk")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wihui"]
+atlas = ExtResource("1_bogrk")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ngixl"]
+atlas = ExtResource("3_mk7hq")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ntsh"]
+atlas = ExtResource("3_mk7hq")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m75cr"]
+atlas = ExtResource("3_mk7hq")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2awbv"]
+atlas = ExtResource("3_mk7hq")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gv4wh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gv4wh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ji5m4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o54ra")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tihq5")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkydl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0lnj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk7hq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wihui")
+}],
+"loop": false,
+"name": &"fly",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ngixl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ntsh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m75cr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2awbv")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a0lnj"]
+height = 22.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a0lnj"]
+radius = 50.0
+
+[node name="Small Bee" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_gv4wh")
+animation = &"fly"
+frame = 3
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_a0lnj")
+
+[node name="Detection Area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection Area"]
+shape = SubResource("CircleShape2D_a0lnj")
