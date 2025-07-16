@@ -32,7 +32,9 @@ func _ready() -> void:
 	attack_component.attack_performed.connect(_on_attack_performed)
 	attack_component.attack_finished.connect(_on_attack_finished)
 	dash_component.dash_started.connect(_on_dash_started)
+	dash_component.dash_ended.connect(_on_dash_ended)
 	dodge_component.dodge_started.connect(_on_dodge_started)
+	dodge_component.dodge_ended.connect(_on_dodge_ended)
 	parry_component.parry_successful.connect(_on_parry_successful)
 
 
@@ -80,13 +82,14 @@ func enter_state(state:PlayerState):
 			pass
 		PlayerState.JUMPING:
 			animated_sprite_2d.flip_h = true if direction.x < 0 else false
-			if movement_component.is_Jumping():
-				animated_sprite_2d.play("jump_start")
+			#Checking jump states in order
+			
+			if movement_component.is_on_ground() and movement_component.just_landed():
+				animated_sprite_2d.play("jump_end")
 			elif movement_component.is_in_air():
 				animated_sprite_2d.play("in_air")
-			elif movement_component.is_on_ground():
-				animated_sprite_2d.play("jump_end")
-
+			elif movement_component.is_Jumping() or movement_component.just_jumped():
+				animated_sprite_2d.play("jump_start")
 
 func exit_state(state:PlayerState):
 	if debug_mode:
@@ -121,10 +124,10 @@ func _input(event: InputEvent) -> void:
 					attack_component.perform_heavy_attack()
 			elif event.is_action_pressed("dash"):
 				change_state(PlayerState.DASHING)
-				dash_component.peerform_dash(direction)
+				dash_component.perform_dash(direction)
 			elif event.is_action_pressed("dodge"):
 				change_state(PlayerState.DODGING)
-				dodge_component.peerform_dodge()
+				dodge_component.perform_dodge()
 			elif event.is_action_pressed("parry"):
 				change_state(PlayerState.PARRYING)
 				parry_component.attempt_parry()
@@ -134,7 +137,7 @@ func _input(event: InputEvent) -> void:
 				if dash_component.can_dash:
 					attack_component.cancel_attack()
 					change_state(PlayerState.DASHING)
-					dash_component.peerform_dash(direction)
+					dash_component.perform_dash(direction)
 					
 
 #Handling Idle state
@@ -189,10 +192,16 @@ func _on_attack_performed(attack_data):
 	
 func _on_dash_started():
 	pass
-	
+
+func _on_dash_ended():
+	change_state(PlayerState.IDLE)
+
 func _on_dodge_started():
 	pass
-	
+
+func _on_dodge_ended():
+	change_state(PlayerState.IDLE)
+
 func _on_parry_successful(attacker):
 	pass
 

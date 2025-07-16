@@ -1,7 +1,8 @@
-[gd_scene load_steps=53 format=3 uid="uid://cou2lca40qdxl"]
+[gd_scene load_steps=54 format=3 uid="uid://cou2lca40qdxl"]
 
 [ext_resource type="Texture2D" uid="uid://pttpo6wfmcsq" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_4ffj5"]
 [ext_resource type="Script" uid="uid://dj0lg7bkycc4m" path="res://Scenes/Entities/Player/player.gd" id="1_rx582"]
+[ext_resource type="Material" uid="uid://d1q7ddmemlsgn" path="res://Resources/Shaders/dash_material.tres" id="2_hkmxn"]
 [ext_resource type="Texture2D" uid="uid://dq23t14l2g002" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Attack-01/Attack-01-Sheet.png" id="2_i4twt"]
 [ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="2_rx582"]
 [ext_resource type="Script" uid="uid://dlf30ooli6jr" path="res://Scenes/Components/health_component.gd" id="3_rx582"]
@@ -157,6 +158,11 @@ region = Rect2(560, 0, 80, 80)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5o8lj"]
 animations = [{
+"frames": [],
+"loop": true,
+"name": &"dash",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_q8fdp")
@@ -229,7 +235,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"jump_end",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -246,7 +252,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"jump_start",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -309,9 +315,11 @@ height = 54.0
 texture_filter = 1
 collision_mask = 6
 script = ExtResource("1_rx582")
+debug_mode = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+material = ExtResource("2_hkmxn")
 sprite_frames = SubResource("SpriteFrames_5o8lj")
 animation = &"idle"
 autoplay = "idle"
@@ -350,12 +358,16 @@ metadata/_custom_type_script = "uid://dlf30ooli6jr"
 
 [node name="CoreAbilities" type="Node" parent="."]
 
-[node name="DodgeComponent" type="Node" parent="CoreAbilities"]
+[node name="DodgeComponent" type="Node" parent="CoreAbilities" node_paths=PackedStringArray("player", "sprite")]
 script = ExtResource("4_y6hyn")
+player = NodePath("../..")
+sprite = NodePath("../../AnimatedSprite2D")
 metadata/_custom_type_script = "uid://bh04okmk0y7f"
 
-[node name="DashComponent" type="Node" parent="CoreAbilities"]
+[node name="DashComponent" type="Node" parent="CoreAbilities" node_paths=PackedStringArray("player", "sprite")]
 script = ExtResource("5_75l7y")
+player = NodePath("../..")
+sprite = NodePath("../../AnimatedSprite2D")
 metadata/_custom_type_script = "uid://c60wdk640jber"
 
 [node name="ParryComponent" type="Node" parent="CoreAbilities"]
