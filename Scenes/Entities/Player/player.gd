@@ -42,7 +42,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	
 	_get_input_direction()
-	print(direction)
 	
 	match current_state:
 		PlayerState.IDLE:
