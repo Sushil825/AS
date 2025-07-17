@@ -13,7 +13,7 @@ enum EnemyState
 var current_state: EnemyState = EnemyState.WALK
 var Game_State : bool = true
 var player : CharacterBody2D = null
-var direction : Vector2 = Vector2.RIGHT
+var direction : Vector2 = [Vector2.RIGHT, Vector2.LEFT].pick_random()
 var gotAttacked : bool = false
 var canAttack : bool = true
 
@@ -63,7 +63,7 @@ func Game_Loop() -> void:
 			randomize()
 			current_state = EnemyState.TAKEDAMAGE if gotAttacked else current_state
 			if player:
-				direction = (player.global_position - self.global_position).normalized()
+				direction.x = -1 * (player.global_position - self.global_position).normalized().x
 				direction.x = round(direction.x)
 				direction.y = 0
 			else:
@@ -81,7 +81,7 @@ func Game_Loop() -> void:
 		EnemyState.TAKEDAMAGE:
 			direction = Vector2.ZERO
 			gotAttacked = false
-			await get_tree().create_timer(0.5).timeout
+			await get_tree().create_timer(1).timeout
 			Animations.play("take_damage")
 			await Animations.animation_finished
 			current_state = EnemyState.SHELLIN
@@ -103,8 +103,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	velocity = direction * speed
-	velocity.y += gravity * delta
+	velocity.y += gravity
 	move_and_slide()
+	
 	if velocity.normalized().x > 0:
 		Animations.flip_h = true
 	elif velocity.normalized().x < 0:

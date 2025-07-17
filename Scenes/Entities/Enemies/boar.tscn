@@ -174,8 +174,8 @@ animations = [{
 radius = 15.0
 height = 42.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_opvx1"]
-size = Vector2(200, 27)
+[sub_resource type="CircleShape2D" id="CircleShape2D_e8n2y"]
+radius = 100.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0i6wj"]
 radius = 21.3776
@@ -189,6 +189,8 @@ script = ExtResource("1_0i6wj")
 sprite_frames = SubResource("SpriteFrames_nylir")
 animation = &"idle"
 autoplay = "walk"
+frame = 1
+frame_progress = 0.595579
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
@@ -199,8 +201,8 @@ shape = SubResource("CapsuleShape2D_opvx1")
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection Area"]
-position = Vector2(0, 2.5)
-shape = SubResource("RectangleShape2D_opvx1")
+position = Vector2(-8, 0)
+shape = SubResource("CircleShape2D_e8n2y")
 debug_color = Color(0.490196, 0.435294, 0.509804, 0.419608)
 
 [node name="HitBoxComponent" type="Area2D" parent="."]
@@ -210,9 +212,10 @@ script = ExtResource("5_76bem")
 metadata/_custom_type_script = "uid://dwn5s6v5no107"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
-position = Vector2(0, 2)
+position = Vector2(-3, 1)
 shape = SubResource("CircleShape2D_0i6wj")
 debug_color = Color(0.168627, 0.639216, 0.231373, 0.419608)
 
 [node name="Movement Timer" type="Timer" parent="."]
 wait_time = 2.5
+one_shot = true
