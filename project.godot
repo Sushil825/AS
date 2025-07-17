@@ -92,6 +92,12 @@ jump={
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Enemy"
 2d_physics/layer_3="Tiles"
+2d_physics/layer_4="Player Hitbox"
+2d_physics/layer_5="Player Hurtbox"
+2d_physics/layer_6="Enemy Hitbox"
+2d_physics/layer_7="Enemy Hurtbox"
+2d_physics/layer_10="Invulnerable"
+2d_physics/layer_32="InvulnerableLayer"
 
 [rendering]
 

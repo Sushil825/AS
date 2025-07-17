@@ -1,8 +1,6 @@
 extends CharacterBody2D
 
-
 #State enum
-
 enum PlayerState{
 	IDLE,
 	MOVING,
@@ -16,15 +14,20 @@ enum PlayerState{
 
 @onready var dash_component: DashComponent = $CoreAbilities/DashComponent
 @onready var parry_component: ParryComponent = $CoreAbilities/ParryComponent
-@onready var attack_component: AttackComponent = $AttackComponent
+@onready var attack_component : AttackComponent = $AttackComponent
 @onready var dodge_component: DodgeComponent = $CoreAbilities/DodgeComponent
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var movement_component: MovementComponent = $MovementComponent
+@onready var Hurtbox_component : HurtBoxComponent = $HurtBoxComponent
+@onready var hurt_box_component: HurtBoxComponent = $HurtBoxComponent
 @export var direction: Vector2 = Vector2.ZERO
 @export var debug_mode:bool=false
 
 var current_state:PlayerState=PlayerState.IDLE
 var previous_state:PlayerState=PlayerState.IDLE
+
+var Enemy : CharacterBody2D = null
+var Attack_Type : AttackData.Type = AttackData.Type.LIGHT
 
 
 func _ready() -> void:
@@ -36,15 +39,17 @@ func _ready() -> void:
 	dodge_component.dodge_started.connect(_on_dodge_started)
 	dodge_component.dodge_ended.connect(_on_dodge_ended)
 	parry_component.parry_successful.connect(_on_parry_successful)
+	Hurtbox_component.area_entered.connect(func(area : Area2D): Enemy = area.get_parent())
+	Hurtbox_component.area_exited.connect(func(_area : Area2D): Enemy = null)
 
 
-
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	
 	_get_input_direction()
 	if debug_mode:
 		print("Current_State: ",PlayerState.keys()[current_state],
-				"Is Attacking: ",attack_component.get_is_attacking())
+				"Is Attacking: ",attack_component.get_is_attacking(),
+				"IS Dashing: ",dash_component.is_dashing)
 	
 	match current_state:
 		PlayerState.IDLE:
@@ -70,20 +75,25 @@ func _get_input_direction():
 
 
 func enter_state(state:PlayerState):
+	
 	if debug_mode:
 		print("Entering State: ",PlayerState.keys()[state])
+	
 	match state:
 		PlayerState.IDLE:
 			animated_sprite_2d.play("idle")
+		
 		PlayerState.MOVING:
 			animated_sprite_2d.flip_h = true if direction.x < 0 else false
 			animated_sprite_2d.play("run")
+		
 		PlayerState.ATTACKING:
-			pass
+			if Enemy and Enemy.has_method("Take_Damage"):
+				Enemy.Take_Damage(attack_component.light_attack_dmg if Attack_Type == AttackData.Type.LIGHT else attack_component.heavy_attack_dmg)
+		
 		PlayerState.JUMPING:
 			animated_sprite_2d.flip_h = true if direction.x < 0 else false
 			#Checking jump states in order
-			
 			if movement_component.is_on_ground() and movement_component.just_landed():
 				animated_sprite_2d.play("jump_end")
 			elif movement_component.is_in_air():
@@ -164,7 +174,10 @@ func handle_attacking_state():
 		change_state(PlayerState.JUMPING)
 	
 func handle_dashing_state():
-	pass
+	if not dash_component.is_dashing and self.direction.x!=0:
+		change_state(PlayerState.MOVING)
+	elif  not dash_component.is_dashing and self.direction.x==0:
+		change_state(PlayerState.IDLE)
 	
 func handle_dodging_state():
 	pass
@@ -184,6 +197,7 @@ func handle_jumping_state():
 			change_state(PlayerState.IDLE)
 
 func _on_attack_performed(attack_data):
+	Attack_Type = attack_data.type
 	match attack_data.type:
 		AttackData.Type.LIGHT:
 			animated_sprite_2d.play("light_attack")
@@ -191,8 +205,9 @@ func _on_attack_performed(attack_data):
 			animated_sprite_2d.play("heavy_attack")
 	
 func _on_dash_started():
-	pass
-
+	if not dash_component.is_dashing:
+		change_state(PlayerState.IDLE)
+		
 func _on_dash_ended():
 	change_state(PlayerState.IDLE)
 
@@ -202,7 +217,7 @@ func _on_dodge_started():
 func _on_dodge_ended():
 	change_state(PlayerState.IDLE)
 
-func _on_parry_successful(attacker):
+func _on_parry_successful(_attacker):
 	pass
 
 func _on_attack_finished():

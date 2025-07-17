@@ -2,8 +2,7 @@ extends CharacterBody2D
 
 enum EnemyState
 {
-	SHELLIN,
-	SHELLOUT,
+	RUN,
 	WALK,
 	DEATH,
 	IDLE,
@@ -15,76 +14,68 @@ var Game_State : bool = true
 var player : CharacterBody2D = null
 var direction : Vector2 = Vector2.RIGHT
 var gotAttacked : bool = false
-var canAttack : bool = true
 
 @export var gravity : int = 800
 @export var Health : float = 100
-@export var speed : int = 25
+@export var speed : int = 50
 
 @onready var Animations : AnimatedSprite2D = $AnimatedSprite2D
 @onready var movement_timer: Timer = $"Movement Timer"
-@onready var shell_timer: Timer = $"Shell Timer"
 
 func OnAttack() -> void:
 	pass
 
 func Take_Damage(Power : float) -> void:
-	if canAttack:
-		Health -= Power
-		gotAttacked = true
+	Health -= Power
+	gotAttacked = true
 		
 func Game_Loop() -> void:
+	
 	if Health <= 0:
 		current_state = EnemyState.DEATH
 	
 	match current_state:
-		EnemyState.SHELLIN:
-			direction = Vector2.ZERO
-			canAttack = false
-			Animations.play("shell_in")
-			shell_timer.start()
-			await Animations.animation_finished
-			current_state = EnemyState.IDLE
-			
-		EnemyState.SHELLOUT:
-			direction = Vector2.ZERO
-			Animations.play("shell_out")
-			await Animations.animation_finished
-			current_state = EnemyState.WALK
-			canAttack = true
-		
 		EnemyState.DEATH:
 			direction = Vector2.ZERO
-			Animations.play("take_damage")
+			Animations.play("hit")
 			await Animations.animation_finished
 			call_deferred("queue_free")
 		
-		EnemyState.WALK:
-			randomize()
-			current_state = EnemyState.TAKEDAMAGE if gotAttacked else current_state
+		EnemyState.RUN:
+			speed = 100
 			if player:
 				direction = (player.global_position - self.global_position).normalized()
-				direction.x = round(direction.x)
-				direction.y = 0
-			else:
-				if movement_timer.is_stopped():
-					direction = [Vector2.LEFT, Vector2.RIGHT].pick_random()
-					movement_timer.wait_time = randf_range(2.5,10)
-					movement_timer.start()
-			Animations.play("walk")
+			direction.x = round(direction.x)
+			direction.y = 0
+			Animations.play("run")
+			current_state = EnemyState.WALK if !player else current_state
+			current_state = EnemyState.TAKEDAMAGE if gotAttacked else current_state
 		
 		EnemyState.IDLE:
 			direction = Vector2.ZERO
-			if !shell_timer.time_left:
-				current_state = EnemyState.SHELLOUT
+			Animations.play("idle")
+			await Animations.animation_finished
+			current_state = EnemyState.RUN if player else EnemyState.WALK
+			current_state = EnemyState.TAKEDAMAGE if gotAttacked else current_state
 		
 		EnemyState.TAKEDAMAGE:
 			direction = Vector2.ZERO
 			gotAttacked = false
 			await get_tree().create_timer(0.5).timeout
-			Animations.play("take_damage")
+			Animations.play("hit")
 			await Animations.animation_finished
-			current_state = EnemyState.SHELLIN
+			current_state = EnemyState.IDLE
+		
+		EnemyState.WALK:
+			randomize()
+			speed = 50
+			if movement_timer.is_stopped():
+				direction = [Vector2.LEFT, Vector2.RIGHT].pick_random()
+				movement_timer.wait_time = randf_range(2.5,10)
+				movement_timer.start()
+			Animations.play("walk")
+			current_state = EnemyState.RUN if player else current_state
+			current_state = EnemyState.TAKEDAMAGE if gotAttacked else current_state
 			
 	Game_State = true
 

@@ -51,7 +51,7 @@ func perform_light_attack():
 	
 	is_attacking=true
 	can_light_attack=false
-	var attack_data=AttackData.new()
+	var attack_data= AttackData.new()
 	attack_data.damage=light_attack_dmg
 	attack_data.type=AttackData.Type.LIGHT
 	attack_data.range=attack_range
@@ -119,6 +119,8 @@ func cancel_attack():
 		is_attacking=false
 		attack_duration_timer.stop()
 		attack_finished.emit()
+		can_heavy_attack=true
+		can_light_attack=true
 		
 func can_attack()->bool:
 	return not is_attacking and(can_light_attack or can_heavy_attack)
