@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://bgfyrna8xchsg"]
+
+[ext_resource type="PackedScene" uid="uid://da58iwmbsviea" path="res://Scenes/Entities/Enemies/Swordsman/Base/swordsman_base.tscn" id="1_anyfx"]
+[ext_resource type="Resource" uid="uid://bf4j6wwh5p4lf" path="res://Resources/Weapon/BaseSword.tres" id="2_l87eh"]
+[ext_resource type="Resource" uid="uid://dwsfww5glec2a" path="res://Resources/Attack/base_light_attack.tres" id="3_efkif"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_anyfx"]
+radius = 12.0
+height = 52.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l87eh"]
+size = Vector2(196, 55)
+
+[node name="SwordsmanBase" instance=ExtResource("1_anyfx")]
+collision_layer = 2
+can_dodge = true
+current_weapon = ExtResource("2_l87eh")
+enemy_attack = ExtResource("3_efkif")
+
+[node name="HurtBoxComponent" parent="." index="0"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent" index="0"]
+position = Vector2(0, 7)
+shape = SubResource("CapsuleShape2D_anyfx")
+
+[node name="DashComponent" parent="CoreAbilities" index="1" node_paths=PackedStringArray("player", "sprite")]
+player = NodePath("../..")
+sprite = NodePath("../../AnimatedSprite2D")
+
+[node name="DodgeComponent" parent="CoreAbilities" index="2" node_paths=PackedStringArray("player", "sprite")]
+player = NodePath("../..")
+sprite = NodePath("../../AnimatedSprite2D")
+
+[node name="DetectionArea" parent="." index="7"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" index="0"]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_l87eh")
+debug_color = Color(0.362739, 0.606623, 0.328439, 0.42)

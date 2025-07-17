@@ -30,6 +30,10 @@ folder_colors={
 "res://Scripts/": "blue"
 }
 
+[global_group]
+
+player=""
+
 [input]
 
 light_attack={
