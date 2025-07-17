@@ -119,6 +119,8 @@ func cancel_attack():
 		is_attacking=false
 		attack_duration_timer.stop()
 		attack_finished.emit()
+		can_heavy_attack=true
+		can_light_attack=true
 		
 func can_attack()->bool:
 	return not is_attacking and(can_light_attack or can_heavy_attack)

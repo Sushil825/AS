@@ -19,7 +19,7 @@ enum PlayerState{
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var Hurtbox_component : HurtBoxComponent = $HurtBoxComponent
-
+@onready var hurt_box_component: HurtBoxComponent = $HurtBoxComponent
 @export var direction: Vector2 = Vector2.ZERO
 @export var debug_mode:bool=false
 
@@ -48,7 +48,8 @@ func _physics_process(_delta: float) -> void:
 	_get_input_direction()
 	if debug_mode:
 		print("Current_State: ",PlayerState.keys()[current_state],
-				"Is Attacking: ",attack_component.get_is_attacking())
+				"Is Attacking: ",attack_component.get_is_attacking(),
+				"IS Dashing: ",dash_component.is_dashing)
 	
 	match current_state:
 		PlayerState.IDLE:
@@ -173,7 +174,10 @@ func handle_attacking_state():
 		change_state(PlayerState.JUMPING)
 	
 func handle_dashing_state():
-	pass
+	if not dash_component.is_dashing and self.direction.x!=0:
+		change_state(PlayerState.MOVING)
+	elif  not dash_component.is_dashing and self.direction.x==0:
+		change_state(PlayerState.IDLE)
 	
 func handle_dodging_state():
 	pass
@@ -201,8 +205,9 @@ func _on_attack_performed(attack_data):
 			animated_sprite_2d.play("heavy_attack")
 	
 func _on_dash_started():
-	pass
-
+	if not dash_component.is_dashing:
+		change_state(PlayerState.IDLE)
+		
 func _on_dash_ended():
 	change_state(PlayerState.IDLE)
 

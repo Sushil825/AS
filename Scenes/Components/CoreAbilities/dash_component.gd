@@ -94,7 +94,8 @@ func start_dash_effect():
 	create_afterimage()
 	
 	
-	
+func cancel_dash():
+	pass
 func end_dash_effect():
 	
 	if not sprite or not sprite.material:
