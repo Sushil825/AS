@@ -1,7 +1,6 @@
-[gd_scene load_steps=38 format=3 uid="uid://da58iwmbsviea"]
+[gd_scene load_steps=37 format=3 uid="uid://da58iwmbsviea"]
 
 [ext_resource type="Script" uid="uid://dlbarnevsbo1u" path="res://Scenes/Entities/Enemies/Swordsman/Base/swordsman_base.gd" id="1_d27yd"]
-[ext_resource type="Script" uid="uid://x2gfe5eqhe3q" path="res://Scenes/Components/Movements/movement_component.gd" id="2_f5a5e"]
 [ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="3_d5clh"]
 [ext_resource type="Script" uid="uid://dlf30ooli6jr" path="res://Scenes/Components/health_component.gd" id="4_ebh70"]
 [ext_resource type="Texture2D" uid="uid://co16jw4uwv5js" path="res://Assets/Swordsman/Hero swordsman Hurt and Die.png" id="4_rmsjx"]
@@ -12,10 +11,7 @@
 [ext_resource type="Script" uid="uid://c60wdk640jber" path="res://Scenes/Components/CoreAbilities/dash_component.gd" id="7_07ad3"]
 [ext_resource type="Texture2D" uid="uid://d2qnynhbxi8s8" path="res://Assets/Swordsman/Hero swordsman Attack.png" id="7_kxjd1"]
 [ext_resource type="Script" uid="uid://bh04okmk0y7f" path="res://Scenes/Components/CoreAbilities/dodge_component.gd" id="8_x2vg8"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rmsjx"]
-radius = 13.0
-height = 54.0
+[ext_resource type="Script" uid="uid://5lsecnbmvm8q" path="res://Scenes/Components/Movements/enemey_movement_component.gd" id="12_rmsjx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xqs0y"]
 atlas = ExtResource("4_rmsjx")
@@ -206,19 +202,10 @@ height = 56.0
 [node name="SwordsmanBase" type="CharacterBody2D"]
 script = ExtResource("1_d27yd")
 
-[node name="MovementComponent" type="Node2D" parent="."]
-script = ExtResource("2_f5a5e")
-metadata/_custom_type_script = "uid://x2gfe5eqhe3q"
-
 [node name="HurtBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
 script = ExtResource("3_d5clh")
 health_component = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://cbljtbydq410e"
-
-[node name="HurtBox" type="CollisionShape2D" parent="HurtBoxComponent"]
-position = Vector2(0, 7)
-shape = SubResource("CapsuleShape2D_rmsjx")
-debug_color = Color(0.811271, 0.364613, 0.503297, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_j7qfw")
@@ -251,3 +238,9 @@ metadata/_custom_type_script = "uid://bh04okmk0y7f"
 visible = false
 position = Vector2(0, 7)
 shape = SubResource("CapsuleShape2D_07ad3")
+
+[node name="EnemyMovementComponent" type="Node2D" parent="."]
+script = ExtResource("12_rmsjx")
+metadata/_custom_type_script = "uid://5lsecnbmvm8q"
+
+[node name="DetectionArea" type="Area2D" parent="."]

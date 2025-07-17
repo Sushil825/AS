@@ -1,8 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://sja4gr0plns4"]
+[gd_scene load_steps=24 format=3 uid="uid://sja4gr0plns4"]
 
 [ext_resource type="Texture2D" uid="uid://dtnmem8b1576e" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Small Bee/Attack/Attack-Sheet.png" id="1_a0lnj"]
 [ext_resource type="Texture2D" uid="uid://cjr8vdj6qehdn" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Small Bee/Fly/Fly-Sheet.png" id="1_bogrk"]
+[ext_resource type="Script" uid="uid://bqpasuo8cmlh4" path="res://Scenes/Entities/Enemies/small_bee.gd" id="1_gv4wh"]
 [ext_resource type="Texture2D" uid="uid://bo1rb3agqtj0q" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Small Bee/Hit/Hit-Sheet.png" id="3_mk7hq"]
+[ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="4_wihui"]
+[ext_resource type="Script" uid="uid://dwn5s6v5no107" path="res://Scenes/Components/hit_box_component.gd" id="5_gv4wh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gv4wh"]
 atlas = ExtResource("1_a0lnj")
@@ -84,7 +87,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wihui")
 }],
-"loop": false,
+"loop": true,
 "name": &"fly",
 "speed": 10.0
 }, {
@@ -107,25 +110,66 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a0lnj"]
-height = 22.0
+radius = 11.0
+height = 26.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a0lnj"]
 radius = 100.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ji5m4"]
+radius = 17.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o54ra"]
+radius = 13.0
+
 [node name="Small Bee" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_gv4wh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_gv4wh")
-animation = &"fly"
+animation = &"hit"
+autoplay = "fly"
 frame = 3
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
 shape = SubResource("CapsuleShape2D_a0lnj")
 
 [node name="Detection Area" type="Area2D" parent="."]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection Area"]
 shape = SubResource("CircleShape2D_a0lnj")
 debug_color = Color(0.490196, 0.435294, 0.509804, 0.419608)
+
+[node name="HurtBoxComponent" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("4_wihui")
+metadata/_custom_type_script = "uid://cbljtbydq410e"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+shape = SubResource("CircleShape2D_ji5m4")
+debug_color = Color(0.866667, 0.305882, 0.482353, 0.419608)
+
+[node name="HitBoxComponent" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 16
+script = ExtResource("5_gv4wh")
+metadata/_custom_type_script = "uid://dwn5s6v5no107"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
+position = Vector2(-3, 0)
+shape = SubResource("CircleShape2D_o54ra")
+debug_color = Color(0.168627, 0.639216, 0.231373, 0.419608)
+
+[node name="Movement Timer" type="Timer" parent="."]
+wait_time = 2.5
+
+[node name="Attack Delay" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
