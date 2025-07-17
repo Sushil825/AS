@@ -110,7 +110,7 @@ animations = [{
 height = 22.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a0lnj"]
-radius = 50.0
+radius = 100.0
 
 [node name="Small Bee" type="CharacterBody2D"]
 
@@ -128,3 +128,4 @@ shape = SubResource("CapsuleShape2D_a0lnj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection Area"]
 shape = SubResource("CircleShape2D_a0lnj")
+debug_color = Color(0.490196, 0.435294, 0.509804, 0.419608)
