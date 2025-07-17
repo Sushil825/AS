@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://cou2lca40qdxl"]
+[gd_scene load_steps=56 format=3 uid="uid://cou2lca40qdxl"]
 
 [ext_resource type="Texture2D" uid="uid://pttpo6wfmcsq" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_4ffj5"]
 [ext_resource type="Script" uid="uid://dj0lg7bkycc4m" path="res://Scenes/Entities/Player/player.gd" id="1_rx582"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bm4ga3y8tn358" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Jump-End/Jump-End-Sheet.png" id="5_hkmxn"]
 [ext_resource type="Script" uid="uid://b7pywml3u85jn" path="res://Scenes/Components/CoreAbilities/parry_component.gd" id="6_5o8lj"]
 [ext_resource type="Script" uid="uid://x2gfe5eqhe3q" path="res://Scenes/Components/Movements/movement_component.gd" id="6_q8fdp"]
+[ext_resource type="Script" uid="uid://dwn5s6v5no107" path="res://Scenes/Components/hit_box_component.gd" id="10_qtr04"]
 [ext_resource type="Script" uid="uid://c0aresow0k4hg" path="res://Scenes/Components/WeaponAttack/attack_component.gd" id="15_hkmxn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q8fdp"]
@@ -307,9 +308,13 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_hkmxn"]
 radius = 30.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qtr04"]
+radius = 13.0
+height = 56.0
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rx582"]
 radius = 11.0
-height = 54.0
+height = 55.0
 
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
@@ -320,7 +325,7 @@ script = ExtResource("1_rx582")
 texture_filter = 1
 material = ExtResource("2_hkmxn")
 sprite_frames = SubResource("SpriteFrames_5o8lj")
-animation = &"light_attack"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="HurtBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
@@ -334,7 +339,19 @@ metadata/_custom_type_script = "uid://cbljtbydq410e"
 shape = SubResource("CircleShape2D_hkmxn")
 debug_color = Color(0.865293, 0.305326, 0.480601, 0.42)
 
+[node name="HitBoxComponent" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 64
+script = ExtResource("10_qtr04")
+metadata/_custom_type_script = "uid://dwn5s6v5no107"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
+position = Vector2(-1, 0)
+shape = SubResource("CapsuleShape2D_qtr04")
+debug_color = Color(0.168627, 0.639216, 0.231373, 0.419608)
+
 [node name="Shape" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
 shape = SubResource("CapsuleShape2D_rx582")
 
 [node name="Camera2D" type="Camera2D" parent="."]
