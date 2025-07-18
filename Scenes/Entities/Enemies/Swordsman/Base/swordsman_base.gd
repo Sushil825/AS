@@ -34,7 +34,7 @@ signal player_detected(player:Node2D)
 @export var can_dash:bool=false
 @export var can_dodge:bool=false
 @export var can_parry:bool=false
-
+@export var debug_mode:bool=false
 
 #Combat
 @export var current_weapon:WeaponResource
@@ -111,16 +111,20 @@ func connect_signals():
 		detection_area.body_exited.connect(_on_player_exited)
 
 func _physics_process(delta: float) -> void:
-	update_ai()
 	
+	update_ai()
+	if debug_mode:
+		print(enemy_movement_component.current_velocity)
 	update_animation()
 
 func update_ai():
-	
+	print(player_target,current_state)
 	match current_state:
 		ENEMYSTATE.IDLE:
 			if player_target:
 				change_state(ENEMYSTATE.RUN)
+			if not player_target:
+				pass
 				
 		ENEMYSTATE.RUN:
 			if not player_target:
@@ -216,7 +220,6 @@ func _on_direction_changed(new_direction:Vector2):
 	
 	
 func _on_player_entered(body:Node2D):
-	print("body")
 	if body.is_in_group("player"):
 		player_target=body
 		player_detected.emit(body)

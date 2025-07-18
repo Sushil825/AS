@@ -6,22 +6,42 @@ class_name EnemyMovementComponent
 signal movement_started
 signal movement_stopped
 signal direction_changed(new_direction:Vector2)
-
+signal started_jumping
+signal started_falling
+signal landed
+signal hit_ceiling
 
 @export var speed:float=100.0
 @export var acceleration:float=500.0
 @export var friction:float=800
 @export var max_speed:float=200
 
+#Gravity properties
+@export var gravity:float=800
+@export var max_fall_speed:float=500
+@export var jump_velocity:float=-400
 
 var target_velocity:Vector2=Vector2.ZERO
 var current_velocity:Vector2=Vector2.ZERO
 var is_moving:bool=false
 var movement_disabled:bool=false
 var facing_direction:Vector2=Vector2.RIGHT
+var prev_facing:Vector2=Vector2.RIGHT
+
+#add short hops
+@export var coyote_time:float=0.1
+var coyote_timer:float=0.0
+
+#Gravity and jump states
+var is_on_ground:bool=false
+var is_jumping:bool=false
+var is_falling:bool=false
+var was_on_ground:bool=false
+var was_jumping:bool=false
+var was_falling:bool=false
 
 var character_body:CharacterBody2D
-var prev_facing:Vector2=Vector2.RIGHT
+
 
 
 
@@ -35,11 +55,25 @@ func _physics_process(delta: float) -> void:
 	
 	if movement_disabled:
 		return
-		
+	apply_gravity(delta)
 	apply_movement(delta)
 	update_facing_direction()
 	check_movement_state()
+	check_vertical_state()
+	update_coyote_timer(delta)
 	
+	
+func apply_gravity(delta:float):
+	
+	if not character_body.is_on_floor():
+		current_velocity.y+=gravity*delta
+		
+		if current_velocity.y>max_fall_speed:
+			current_velocity.y=max_fall_speed
+			
+	else:
+		if current_velocity.y>0:
+			current_velocity.y=0
 	
 	
 func move_towards(target_position:Vector2):
@@ -50,12 +84,21 @@ func move_towards(target_position:Vector2):
 	set_movement_direction(direction)
 	
 	
-	
+
+func jump():
+	if movement_disabled:
+		return
+		
+	if character_body.is_on_floor() or coyote_timer>0:
+		current_velocity.y=jump_velocity
+		coyote_timer=0
+
 func set_movement_direction(direction:Vector2):
 	
 	if movement_disabled:
 		return
-	
+		
+	target_velocity=direction*speed
 	if direction !=Vector2.ZERO:
 		var new_facing=direction.normalized()
 		
@@ -75,7 +118,6 @@ func apply_movement(delta:float):
 		current_velocity=current_velocity.move_toward(target_velocity,acceleration*delta)
 	else:
 		current_velocity=current_velocity.move_toward(Vector2.ZERO,friction*delta)
-		
 		
 	#Clamping max speed
 	
@@ -106,8 +148,39 @@ func check_movement_state():
 		if is_moving:
 			movement_started.emit()
 		else:
-			movement_started.emit()
+			movement_stopped.emit()
 
+func check_vertical_state():
+	was_on_ground=is_on_ground
+	was_jumping=is_jumping
+	was_falling=is_falling
+	
+	#Update current states
+	
+	is_on_ground=character_body.is_on_floor()
+	is_jumping=current_velocity.y<-50
+	is_falling=current_velocity.y>50 and not is_on_ground
+	
+	#Emit signals
+	
+	if not was_jumping and is_jumping:
+		started_jumping.emit()
+		
+	if not was_falling and is_falling:
+		started_falling.emit()
+	
+	if not was_on_ground and is_on_ground:
+		landed.emit()
+		
+	if character_body.is_on_ceiling() and current_velocity.y<0:
+		current_velocity.y=0
+		hit_ceiling.emit()
+		
+func update_coyote_timer(delta:float):
+	if is_on_ground:
+		coyote_timer=coyote_time
+	elif coyote_timer>0:
+		coyote_timer-=delta
 
 
 func set_speed(new_speed:float):
