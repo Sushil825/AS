@@ -391,4 +391,4 @@ tile_set = SubResource("TileSet_efet3")
 position = Vector2(-25, 1)
 
 [node name="SwordsmanBase" parent="." instance=ExtResource("3_i0cdd")]
-position = Vector2(342, -4)
+position = Vector2(346, -8)

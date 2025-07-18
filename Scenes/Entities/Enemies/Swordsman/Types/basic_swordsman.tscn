@@ -12,7 +12,6 @@ height = 52.0
 size = Vector2(196, 55)
 
 [node name="SwordsmanBase" instance=ExtResource("1_anyfx")]
-collision_layer = 2
 can_dodge = true
 current_weapon = ExtResource("2_l87eh")
 enemy_attack = ExtResource("3_efkif")
