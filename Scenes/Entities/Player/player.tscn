@@ -314,7 +314,7 @@ height = 56.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rx582"]
 radius = 11.0
-height = 55.0
+height = 50.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 texture_filter = 1
@@ -394,3 +394,8 @@ metadata/_custom_type_script = "uid://c0aresow0k4hg"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 648
+limit_smoothed = true
