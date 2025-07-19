@@ -39,25 +39,8 @@ func _deactivate():
 	
 	
 func _on_area_entered(area:Area2D):
-	
+	print(area.get_parent().name)
 	if area is HurtBoxComponent:
 		var hurtbox=area as HurtBoxComponent
-		if can_hit(hurtbox):
-			hit_targets.append(hurtbox)
-
-
-func can_hit(hurtbox:HurtBoxComponent)->bool:
-	if not is_active:
-		return false
-		
-	if hurtbox in hit_targets:
-		return false
-		
-	var parent=hurtbox.get_parent()
-	if parent.has_method("get_tags"):
-		var target_tags=parent.get_tags()
-		for tag in hit_tags:
-			if tag in target_tags:
-				return true
-				
-	return false
+		if hurtbox.has_method("take_hit"):
+			hurtbox.take_hit(self)

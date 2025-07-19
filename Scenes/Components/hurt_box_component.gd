@@ -25,23 +25,25 @@ func _on_area_entered(area:Area2D):
 		return
 	if area is HitBoxComponent:
 		var hitbox=area as HitBoxComponent
-		if hitbox.can_hit(self):
-			take_hit(hitbox)
+		
+		take_hit(hitbox)
 			
 			
 func take_hit(hitbox:HitBoxComponent):
+	print("took hit")
 	if not health_component:
 		return
 	var damage=hitbox.damage
 	var knockback=hitbox.knockback_force
 	var direction=hitbox.knockback_direction
+	#Main thing
 	health_component.take_damage(damage)
 	
 	var parent=get_parent()
 	if parent is CharacterBody2D and knockback>0:
 		parent.velocity+=direction*knockback
 		
-		
+	
 	start_invincibility()
 	create_hit_effect()
 	
