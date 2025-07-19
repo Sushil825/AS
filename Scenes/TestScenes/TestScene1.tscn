@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cou2lca40qdxl" path="res://Scenes/Entities/Player/player.tscn" id="1_4qg1y"]
 [ext_resource type="Texture2D" uid="uid://c0a5vbcsj3jgf" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Assets/Buildings.png" id="1_pj2ya"]
-[ext_resource type="PackedScene" uid="uid://bgfyrna8xchsg" path="res://Scenes/Entities/Enemies/Swordsman/Types/basic_swordsman.tscn" id="3_i0cdd"]
+[ext_resource type="PackedScene" uid="uid://bvi7xb8ee5xlo" path="res://Scenes/Entities/Enemies/Swordsman/Types/knight.tscn" id="4_efet3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i0cdd"]
 texture = ExtResource("1_pj2ya")
@@ -388,7 +388,7 @@ tile_map_data = PackedByteArray("AADj/woAAAAAAAcAAADj/wsAAAAAAAgAAADj/wwAAAAAAAk
 tile_set = SubResource("TileSet_efet3")
 
 [node name="Player" parent="." instance=ExtResource("1_4qg1y")]
-position = Vector2(73, 129)
+position = Vector2(199, 132)
 
-[node name="SwordsmanBase" parent="." instance=ExtResource("3_i0cdd")]
-position = Vector2(340, 131)
+[node name="Knight" parent="." instance=ExtResource("4_efet3")]
+position = Vector2(-44, 147)

@@ -1,204 +1,18 @@
-[gd_scene load_steps=42 format=3 uid="uid://da58iwmbsviea"]
+[gd_scene load_steps=15 format=3 uid="uid://da58iwmbsviea"]
 
 [ext_resource type="Script" uid="uid://dlbarnevsbo1u" path="res://Scenes/Entities/Enemies/Swordsman/Base/swordsman_base.gd" id="1_d27yd"]
 [ext_resource type="Script" uid="uid://dwn5s6v5no107" path="res://Scenes/Components/hit_box_component.gd" id="3_07ad3"]
 [ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="3_d5clh"]
 [ext_resource type="Script" uid="uid://dlf30ooli6jr" path="res://Scenes/Components/health_component.gd" id="4_ebh70"]
-[ext_resource type="Texture2D" uid="uid://co16jw4uwv5js" path="res://Assets/Swordsman/Hero swordsman Hurt and Die.png" id="4_rmsjx"]
-[ext_resource type="Texture2D" uid="uid://ebavxtbxfpey" path="res://Assets/Swordsman/Hero swordsman idle.png" id="5_07ad3"]
 [ext_resource type="Script" uid="uid://c0aresow0k4hg" path="res://Scenes/Components/WeaponAttack/attack_component.gd" id="5_41ql2"]
 [ext_resource type="Script" uid="uid://b7pywml3u85jn" path="res://Scenes/Components/CoreAbilities/parry_component.gd" id="6_rmsjx"]
-[ext_resource type="Texture2D" uid="uid://hu3cl40pokma" path="res://Assets/Swordsman/Hero swordsman Run.png" id="6_x2vg8"]
 [ext_resource type="Script" uid="uid://c60wdk640jber" path="res://Scenes/Components/CoreAbilities/dash_component.gd" id="7_07ad3"]
-[ext_resource type="Texture2D" uid="uid://d2qnynhbxi8s8" path="res://Assets/Swordsman/Hero swordsman Attack.png" id="7_kxjd1"]
 [ext_resource type="Script" uid="uid://bh04okmk0y7f" path="res://Scenes/Components/CoreAbilities/dodge_component.gd" id="8_x2vg8"]
 [ext_resource type="Script" uid="uid://5lsecnbmvm8q" path="res://Scenes/Components/Movements/enemey_movement_component.gd" id="12_rmsjx"]
 [ext_resource type="Texture2D" uid="uid://d0hmafbkdemhd" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/RedFill.png" id="14_xqs0y"]
 [ext_resource type="Texture2D" uid="uid://dmui46e8ib2q3" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/Fill.png" id="15_jcyqe"]
 [ext_resource type="Texture2D" uid="uid://pjrvsq6wmsi0" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/GreenFill.png" id="16_bnxlh"]
 [ext_resource type="Script" uid="uid://c0jtxv7rv0jjg" path="res://Scenes/Entities/Enemies/Swordsman/Base/texture_progress_bar.gd" id="17_jcyqe"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xqs0y"]
-atlas = ExtResource("4_rmsjx")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jcyqe"]
-atlas = ExtResource("4_rmsjx")
-region = Rect2(0, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bnxlh"]
-atlas = ExtResource("4_rmsjx")
-region = Rect2(0, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_di0tk"]
-atlas = ExtResource("4_rmsjx")
-region = Rect2(0, 192, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7bqjq"]
-atlas = ExtResource("4_rmsjx")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6yyt7"]
-atlas = ExtResource("4_rmsjx")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_eeue2"]
-atlas = ExtResource("4_rmsjx")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k48fj"]
-atlas = ExtResource("5_07ad3")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tnld6"]
-atlas = ExtResource("5_07ad3")
-region = Rect2(0, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w62tr"]
-atlas = ExtResource("6_x2vg8")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pgbqn"]
-atlas = ExtResource("6_x2vg8")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p48og"]
-atlas = ExtResource("6_x2vg8")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j2y4v"]
-atlas = ExtResource("6_x2vg8")
-region = Rect2(0, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f67sa"]
-atlas = ExtResource("6_x2vg8")
-region = Rect2(64, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_abepi"]
-atlas = ExtResource("6_x2vg8")
-region = Rect2(128, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i5nkn"]
-atlas = ExtResource("6_x2vg8")
-region = Rect2(0, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xhbni"]
-atlas = ExtResource("6_x2vg8")
-region = Rect2(64, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_15d7o"]
-atlas = ExtResource("7_kxjd1")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_84fiw"]
-atlas = ExtResource("7_kxjd1")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i66ic"]
-atlas = ExtResource("7_kxjd1")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e16la"]
-atlas = ExtResource("7_kxjd1")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uv7jj"]
-atlas = ExtResource("7_kxjd1")
-region = Rect2(320, 0, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_j7qfw"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xqs0y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jcyqe")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bnxlh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_di0tk")
-}],
-"loop": true,
-"name": &"die",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7bqjq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6yyt7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_eeue2")
-}],
-"loop": true,
-"name": &"hurt",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_k48fj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tnld6")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 7.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_w62tr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pgbqn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p48og")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j2y4v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f67sa")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_abepi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i5nkn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xhbni")
-}],
-"loop": true,
-"name": &"run",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_15d7o")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_84fiw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i66ic")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e16la")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uv7jj")
-}],
-"loop": true,
-"name": &"side_attack",
-"speed": 10.0
-}]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_07ad3"]
 radius = 13.0
@@ -208,11 +22,6 @@ height = 56.0
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_d27yd")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_j7qfw")
-animation = &"side_attack"
-autoplay = "idle"
 
 [node name="HurtBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
 collision_layer = 64
