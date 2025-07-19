@@ -22,6 +22,8 @@ var gotAttacked : bool = false
 @onready var Animations : AnimatedSprite2D = $AnimatedSprite2D
 @onready var movement_timer: Timer = $"Movement Timer"
 @onready var detection_area: CollisionShape2D = $"Detection Area/CollisionShape2D"
+@onready var hitbox: HitBoxComponent = $HitBoxComponent
+@onready var Hurtbox_component : HurtBoxComponent = $HurtBoxComponent
 
 func OnAttack() -> void:
 	pass
@@ -45,7 +47,7 @@ func Game_Loop() -> void:
 		EnemyState.RUN:
 			speed = 100
 			if player:
-				direction.x = -1 * (player.global_position - self.global_position).normalized().x
+				direction.x = (player.global_position - self.global_position).normalized().x
 			direction.x = round(direction.x)
 			direction.y = 0
 			Animations.play("run")
@@ -72,7 +74,6 @@ func Game_Loop() -> void:
 			speed = 50
 			if movement_timer.is_stopped():
 				direction = [Vector2.LEFT, Vector2.RIGHT].pick_random()
-				movement_timer.wait_time = randf_range(2,6)
 				movement_timer.start()
 			Animations.play("walk")
 			current_state = EnemyState.RUN if player else current_state
@@ -93,7 +94,7 @@ func _ready() -> void:
 			player = null
 	)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	velocity = direction * speed
 	velocity.y += gravity
 	move_and_slide()
@@ -107,3 +108,7 @@ func _process(_delta: float) -> void:
 	if Game_State:
 		Game_State = false
 	Game_Loop()
+
+func _on_hurt_box_component_area_entered(area: Area2D) -> void:
+	hitbox.knockback_direction.x = (area.get_parent().global_position - self.global_position).normalized().x
+	area.get_parent().Hurtbox_component.take_hit(hitbox)

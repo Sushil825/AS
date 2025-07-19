@@ -19,7 +19,9 @@ enum PlayerState{
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var Hurtbox_component : HurtBoxComponent = $HurtBoxComponent
-@onready var hurt_box_component: HurtBoxComponent = $HurtBoxComponent
+@onready var hitbox : HitBoxComponent = $HitBoxComponent
+@onready var healthComponent : HealthComponent = $HealthComponent
+
 @export var direction: Vector2 = Vector2.ZERO
 @export var debug_mode:bool=false
 
@@ -41,7 +43,7 @@ func _ready() -> void:
 	parry_component.parry_successful.connect(_on_parry_successful)
 	Hurtbox_component.area_entered.connect(func(area : Area2D): Enemy = area.get_parent())
 	Hurtbox_component.area_exited.connect(func(_area : Area2D): Enemy = null)
-
+	healthComponent.died.connect(func(): call_deferred("queue_free"))
 
 func _physics_process(_delta: float) -> void:
 	

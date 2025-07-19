@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgfyrna8xchsg"]
+[gd_scene load_steps=7 format=3 uid="uid://bgfyrna8xchsg"]
 
 [ext_resource type="PackedScene" uid="uid://da58iwmbsviea" path="res://Scenes/Entities/Enemies/Swordsman/Base/swordsman_base.tscn" id="1_anyfx"]
 [ext_resource type="Resource" uid="uid://bf4j6wwh5p4lf" path="res://Resources/Weapon/BaseSword.tres" id="2_l87eh"]
 [ext_resource type="Resource" uid="uid://dwsfww5glec2a" path="res://Resources/Attack/base_light_attack.tres" id="3_efkif"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l87eh"]
+radius = 33.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_anyfx"]
 radius = 12.0
@@ -17,14 +20,18 @@ can_dodge = true
 current_weapon = ExtResource("2_l87eh")
 enemy_attack = ExtResource("3_efkif")
 
-[node name="HurtBoxComponent" parent="." index="0"]
+[node name="HurtBoxComponent" parent="." index="1"]
 collision_layer = 65536
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent" index="0"]
+shape = SubResource("CircleShape2D_l87eh")
+debug_color = Color(0.854902, 0.341176, 0.352941, 0.419608)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitBoxComponent" index="0"]
 position = Vector2(0, 7)
 shape = SubResource("CapsuleShape2D_anyfx")
-debug_color = Color(0.855956, 0.342618, 0.352142, 0.42)
+debug_color = Color(0.241599, 0.628628, 0.293732, 0.42)
 
 [node name="DashComponent" parent="CoreAbilities" index="1" node_paths=PackedStringArray("player", "sprite")]
 player = NodePath("../..")
@@ -34,10 +41,10 @@ sprite = NodePath("../../AnimatedSprite2D")
 player = NodePath("../..")
 sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="DetectionArea" parent="." index="7"]
+[node name="DetectionArea" parent="." index="8"]
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" index="0"]
 position = Vector2(3, 4.5)
 shape = SubResource("RectangleShape2D_l87eh")
-debug_color = Color(0.362739, 0.606623, 0.328439, 0.42)
+debug_color = Color(0.596078, 0.498039, 0.603922, 0.32549)

@@ -1,10 +1,18 @@
-[gd_scene load_steps=4 format=4 uid="uid://1si22ucjpdi4"]
+[gd_scene load_steps=9 format=4 uid="uid://1si22ucjpdi4"]
 
+[ext_resource type="Script" uid="uid://camwsgscy13kx" path="res://Scenes/TileSet/level_2.gd" id="1_e4ik1"]
 [ext_resource type="Texture2D" uid="uid://dfeuspbre811" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Background/Background.png" id="1_mpqen"]
 [ext_resource type="PackedScene" uid="uid://c6twytyjvvcpi" path="res://Scenes/TileSet/jungle_tile.tscn" id="2_fkp1r"]
 [ext_resource type="PackedScene" uid="uid://cou2lca40qdxl" path="res://Scenes/Entities/Player/player.tscn" id="3_fkp1r"]
+[ext_resource type="PackedScene" uid="uid://voyfmt3j2sk1" path="res://Scenes/Entities/Enemies/boar.tscn" id="5_hfo00"]
+[ext_resource type="PackedScene" uid="uid://sja4gr0plns4" path="res://Scenes/Entities/Enemies/small_bee.tscn" id="6_toewf"]
+[ext_resource type="PackedScene" uid="uid://cxgrpymmn2brt" path="res://Scenes/Entities/Enemies/snail.tscn" id="7_2jd8r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fkp1r"]
+size = Vector2(65.5, 65)
 
 [node name="Level 2" type="Node2D"]
+script = ExtResource("1_e4ik1")
 
 [node name="Background Image" type="Sprite2D" parent="."]
 position = Vector2(576, 324)
@@ -24,6 +32,21 @@ tile_map_data = PackedByteArray("AAAAAAMAAAABAAAAAAAAAAQAAAABAAEAAAAAAAUAAAABAAI
 [node name="Player" parent="Main" instance=ExtResource("3_fkp1r")]
 position = Vector2(32, 37)
 
+[node name="Boar" parent="Main" instance=ExtResource("5_hfo00")]
+position = Vector2(85, 214)
+
+[node name="Boar2" parent="Main" instance=ExtResource("5_hfo00")]
+position = Vector2(1071, 232)
+
+[node name="Small Bee" parent="Main" instance=ExtResource("6_toewf")]
+position = Vector2(728, 71)
+
+[node name="Small Bee2" parent="Main" instance=ExtResource("6_toewf")]
+position = Vector2(410, 336)
+
+[node name="Snail" parent="Main" instance=ExtResource("7_2jd8r")]
+position = Vector2(377, 575)
+
 [node name="Forground" type="Node2D" parent="."]
 position = Vector2(27, 14)
 
@@ -33,3 +56,13 @@ tile_map_data = PackedByteArray("AAD//wAAAAAKAA4AAAD//wEAAAAKAA8AAAD//wIAAAAKABA
 
 [node name="Jungle Tile2" parent="Forground" instance=ExtResource("2_fkp1r")]
 tile_map_data = PackedByteArray("AAAMACMAAwAJABAAAAANACMAAwAKABAAAAA=")
+
+[node name="Change_Scene" type="Area2D" parent="."]
+position = Vector2(-1079, 589)
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Change_Scene"]
+position = Vector2(1161, 25)
+shape = SubResource("RectangleShape2D_fkp1r")
+
+[connection signal="body_entered" from="Change_Scene" to="." method="_on_change_scene_body_entered"]

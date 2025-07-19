@@ -1,6 +1,7 @@
-[gd_scene load_steps=37 format=3 uid="uid://da58iwmbsviea"]
+[gd_scene load_steps=42 format=3 uid="uid://da58iwmbsviea"]
 
 [ext_resource type="Script" uid="uid://dlbarnevsbo1u" path="res://Scenes/Entities/Enemies/Swordsman/Base/swordsman_base.gd" id="1_d27yd"]
+[ext_resource type="Script" uid="uid://dwn5s6v5no107" path="res://Scenes/Components/hit_box_component.gd" id="3_07ad3"]
 [ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="3_d5clh"]
 [ext_resource type="Script" uid="uid://dlf30ooli6jr" path="res://Scenes/Components/health_component.gd" id="4_ebh70"]
 [ext_resource type="Texture2D" uid="uid://co16jw4uwv5js" path="res://Assets/Swordsman/Hero swordsman Hurt and Die.png" id="4_rmsjx"]
@@ -12,6 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://d2qnynhbxi8s8" path="res://Assets/Swordsman/Hero swordsman Attack.png" id="7_kxjd1"]
 [ext_resource type="Script" uid="uid://bh04okmk0y7f" path="res://Scenes/Components/CoreAbilities/dodge_component.gd" id="8_x2vg8"]
 [ext_resource type="Script" uid="uid://5lsecnbmvm8q" path="res://Scenes/Components/Movements/enemey_movement_component.gd" id="12_rmsjx"]
+[ext_resource type="Texture2D" uid="uid://d0hmafbkdemhd" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/RedFill.png" id="14_xqs0y"]
+[ext_resource type="Texture2D" uid="uid://dmui46e8ib2q3" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/Fill.png" id="15_jcyqe"]
+[ext_resource type="Texture2D" uid="uid://pjrvsq6wmsi0" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/GreenFill.png" id="16_bnxlh"]
+[ext_resource type="Script" uid="uid://c0jtxv7rv0jjg" path="res://Scenes/Entities/Enemies/Swordsman/Base/texture_progress_bar.gd" id="17_jcyqe"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xqs0y"]
 atlas = ExtResource("4_rmsjx")
@@ -118,7 +123,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"die",
-"speed": 5.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -132,7 +137,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"hurt",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -143,7 +148,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 3.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -192,7 +197,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"side_attack",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_07ad3"]
@@ -204,15 +209,23 @@ collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_d27yd")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_j7qfw")
+animation = &"side_attack"
+autoplay = "idle"
+
 [node name="HurtBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
+collision_layer = 64
+collision_mask = 8
 script = ExtResource("3_d5clh")
 health_component = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://cbljtbydq410e"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_j7qfw")
-animation = &"idle"
-autoplay = "idle"
+[node name="HitBoxComponent" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 16
+script = ExtResource("3_07ad3")
+metadata/_custom_type_script = "uid://dwn5s6v5no107"
 
 [node name="HealthComponent" type="Node2D" parent="."]
 script = ExtResource("4_ebh70")
@@ -246,3 +259,21 @@ script = ExtResource("12_rmsjx")
 metadata/_custom_type_script = "uid://5lsecnbmvm8q"
 
 [node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control" node_paths=PackedStringArray("health_component")]
+layout_mode = 0
+offset_left = -32.0
+offset_top = -31.0
+offset_right = 32.0
+offset_bottom = 9.0
+texture_under = ExtResource("14_xqs0y")
+texture_over = ExtResource("15_jcyqe")
+texture_progress = ExtResource("16_bnxlh")
+script = ExtResource("17_jcyqe")
+health_component = NodePath("../../HealthComponent")
