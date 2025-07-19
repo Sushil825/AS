@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://cou2lca40qdxl"]
+[gd_scene load_steps=61 format=3 uid="uid://cou2lca40qdxl"]
 
 [ext_resource type="Texture2D" uid="uid://pttpo6wfmcsq" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_4ffj5"]
 [ext_resource type="Script" uid="uid://dj0lg7bkycc4m" path="res://Scenes/Entities/Player/player.gd" id="1_rx582"]
@@ -16,6 +16,11 @@
 [ext_resource type="Script" uid="uid://x2gfe5eqhe3q" path="res://Scenes/Components/Movements/movement_component.gd" id="6_q8fdp"]
 [ext_resource type="Script" uid="uid://dwn5s6v5no107" path="res://Scenes/Components/hit_box_component.gd" id="10_qtr04"]
 [ext_resource type="Script" uid="uid://c0aresow0k4hg" path="res://Scenes/Components/WeaponAttack/attack_component.gd" id="15_hkmxn"]
+[ext_resource type="PackedScene" uid="uid://72br7ke1iwip" path="res://Scenes/Components/camera_component.tscn" id="17_oedhw"]
+[ext_resource type="Texture2D" uid="uid://d0hmafbkdemhd" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/RedFill.png" id="18_fd7sw"]
+[ext_resource type="Texture2D" uid="uid://dmui46e8ib2q3" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/Fill.png" id="18_s4doi"]
+[ext_resource type="Texture2D" uid="uid://pjrvsq6wmsi0" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/GreenFill.png" id="20_o25qk"]
+[ext_resource type="Script" uid="uid://3v8t3ncv24s8" path="res://Scenes/Entities/Player/texture_progress_bar.gd" id="21_o25qk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q8fdp"]
 atlas = ExtResource("2_i4twt")
@@ -392,10 +397,21 @@ script = ExtResource("15_hkmxn")
 light_attack_cooldown = 0.1
 metadata/_custom_type_script = "uid://c0aresow0k4hg"
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
-limit_left = 0
-limit_top = 0
-limit_right = 1152
-limit_bottom = 648
-limit_smoothed = true
+[node name="CameraComponent" parent="." instance=ExtResource("17_oedhw")]
+position_smoothing_enabled = false
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control" node_paths=PackedStringArray("health_component")]
+layout_mode = 0
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = -24.0
+texture_under = ExtResource("18_fd7sw")
+texture_over = ExtResource("18_s4doi")
+texture_progress = ExtResource("20_o25qk")
+script = ExtResource("21_o25qk")
+health_component = NodePath("../../HealthComponent")

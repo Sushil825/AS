@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://voyfmt3j2sk1"]
+[gd_scene load_steps=33 format=3 uid="uid://voyfmt3j2sk1"]
 
 [ext_resource type="Script" uid="uid://7v1lcs5phk47" path="res://Scenes/Entities/Enemies/boar.gd" id="1_0i6wj"]
 [ext_resource type="Texture2D" uid="uid://distxn11b6lk4" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Boar/Hit-Vanish/Hit-Sheet.png" id="1_opvx1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b11tkro4anl0b" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Boar/Run/Run-Sheet.png" id="3_0i6wj"]
 [ext_resource type="Texture2D" uid="uid://45u6fkbdluf6" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Boar/Walk/Walk-Base-Sheet.png" id="4_e8n2y"]
 [ext_resource type="Script" uid="uid://dwn5s6v5no107" path="res://Scenes/Components/hit_box_component.gd" id="5_76bem"]
+[ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="7_e8n2y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hmne4"]
 atlas = ExtResource("1_opvx1")
@@ -180,6 +181,9 @@ radius = 100.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_0i6wj"]
 radius = 21.3776
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ji5m4"]
+radius = 25.7099
+
 [node name="Boar" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 5
@@ -216,6 +220,19 @@ position = Vector2(-3, 1)
 shape = SubResource("CircleShape2D_0i6wj")
 debug_color = Color(0.168627, 0.639216, 0.231373, 0.419608)
 
+[node name="HurtBoxComponent" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("7_e8n2y")
+metadata/_custom_type_script = "uid://cbljtbydq410e"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(-1, 2)
+shape = SubResource("CircleShape2D_ji5m4")
+debug_color = Color(0.866667, 0.305882, 0.482353, 0.419608)
+
 [node name="Movement Timer" type="Timer" parent="."]
 wait_time = 2.5
 one_shot = true
+
+[connection signal="area_entered" from="HurtBoxComponent" to="." method="_on_hurt_box_component_area_entered"]

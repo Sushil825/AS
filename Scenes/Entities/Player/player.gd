@@ -19,7 +19,7 @@ enum PlayerState{
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var Hurtbox_component : HurtBoxComponent = $HurtBoxComponent
-@onready var hurt_box_component: HurtBoxComponent = $HurtBoxComponent
+@onready var hitbox : HitBoxComponent = $HitBoxComponent
 @export var direction: Vector2 = Vector2.ZERO
 @export var debug_mode:bool=false
 

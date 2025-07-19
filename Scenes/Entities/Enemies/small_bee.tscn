@@ -117,7 +117,7 @@ height = 26.0
 radius = 100.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ji5m4"]
-radius = 17.0
+radius = 25.7099
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o54ra"]
 radius = 13.0
@@ -130,10 +130,8 @@ script = ExtResource("1_gv4wh")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_gv4wh")
-animation = &"hit"
+animation = &"attack"
 autoplay = "fly"
-frame = 3
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
@@ -171,5 +169,12 @@ debug_color = Color(0.168627, 0.639216, 0.231373, 0.419608)
 wait_time = 2.5
 
 [node name="Attack Delay" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 1.5
 one_shot = true
+
+[connection signal="body_entered" from="Detection Area" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="Detection Area" to="." method="_on_detection_area_body_exited"]
+[connection signal="area_entered" from="HurtBoxComponent" to="." method="_on_hurt_box_component_area_entered"]
+[connection signal="area_exited" from="HurtBoxComponent" to="." method="_on_hurt_box_component_area_exited"]
+[connection signal="timeout" from="Movement Timer" to="." method="_on_movement_timer_timeout"]
+[connection signal="timeout" from="Attack Delay" to="." method="_on_attack_delay_timeout"]

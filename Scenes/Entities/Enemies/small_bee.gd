@@ -1,115 +1,108 @@
 extends CharacterBody2D
 
-enum EnemyState
+enum states
 {
-	FLY,
-	TAKEDAMAGE,
-	ATTACK,
-	DEATH,
+	fly,
+	attack,
+	take_damage,
+	death
 }
 
-var current_state: EnemyState = EnemyState.FLY
-var Game_State : bool = true
-var player : CharacterBody2D = null
-var direction : Vector2 = [Vector2.RIGHT, Vector2.LEFT].pick_random()
-var gotAttacked : bool = false
-var canAttack : bool = false
-
-@export var Health : float = 100
-@export var speed : int = 50
-
 @onready var Animations : AnimatedSprite2D = $AnimatedSprite2D
-@onready var movement_timer: Timer = $"Movement Timer"
-@onready var attack_delay : Timer = $"Attack Delay"
-@onready var detection_area: CollisionShape2D = $"Detection Area/CollisionShape2D"
-@onready var hurt_box_component: HurtBoxComponent = $HurtBoxComponent
+@onready var hitbox: HitBoxComponent = $HitBoxComponent
+@onready var Hurtbox_component : HurtBoxComponent = $HurtBoxComponent
 
-func OnAttack() -> void:
-	pass
+var health : float = 125
+var direction : Vector2 = Vector2.LEFT
+var speed : int = 100
 
-func Take_Damage(Power : float) -> void:
-	Health -= Power
-	gotAttacked = true
-		
-func Game_Loop() -> void:
-	randomize()
-	
-	if Health <= 0:
-		current_state = EnemyState.DEATH
+var GameLoop : bool = true
+var changeMovement : bool = true
+var canAttack : bool = false
+var playerInRange: bool = false
+var takeDamage: bool = false
+
+var current_state : states = states.fly
+var player : CharacterBody2D = null
+
+func _ready() -> void:
+	$"Movement Timer".start()
+	$"Attack Delay".start()
+
+func _physics_process(_delta: float) -> void:
+	if GameLoop:
+		GameLoop = false
+		Enemy_States()
+
+func Enemy_States() -> void:
+	if health <= 0:
+		current_state = states.death
+	elif takeDamage:
+		current_state = states.take_damage
+	elif canAttack and playerInRange:
+		current_state = states.attack
+	else:
+		current_state = states.fly
 	
 	match current_state:
-		EnemyState.FLY:
+		states.fly:
 			Animations.play("fly")
 			if player:
-				direction.x = round((player.global_position - self.global_position).normalized().x)
-				direction.y = 0
+				direction.x = (player.global_position - self.global_position).normalized().x
 			else:
-				if movement_timer.is_stopped():
-					direction = [Vector2.LEFT, Vector2.RIGHT].pick_random()
-					movement_timer.wait_time = randf_range(2.5,10)
-					movement_timer.start()
-			current_state = EnemyState.ATTACK if canAttack else current_state
-			current_state = EnemyState.TAKEDAMAGE if gotAttacked else current_state
-		
-		EnemyState.TAKEDAMAGE:
-			direction = Vector2.ZERO
-			gotAttacked = false
-			await get_tree().create_timer(1).timeout
+				if changeMovement:
+					changeMovement = false
+					direction = [Vector2.RIGHT, Vector2.LEFT].pick_random()
+					$"Movement Timer".start()
+				
+			if direction.x > 0:
+				Animations.flip_h = true
+			elif direction.x < 0:
+				Animations.flip_h = false
+				
+			velocity = direction * speed
+			move_and_slide()
+			
+		states.attack:
+			Animations.play("attack")
+			canAttack = false
+			$"Attack Delay".start()
+			if player:
+				hitbox.knockback_direction.x = (player.global_position - self.global_position).normalized().x
+				player.Hurtbox_component.take_hit(hitbox)
+			await Animations.animation_finished
+			
+		states.take_damage:
+			takeDamage = false
 			Animations.play("hit")
 			await Animations.animation_finished
-			current_state = EnemyState.FLY
-		
-		EnemyState.ATTACK:
-			if attack_delay.is_stopped():
-				direction = Vector2.ZERO
-				Animations.play("attack")
-				await Animations.animation_finished
-				attack_delay.wait_time = randf_range(2,5)
-				attack_delay.start()
-			else:
-				current_state = EnemyState.FLY
 			
-		EnemyState.DEATH:
-			direction = Vector2.ZERO
+		states.death:
 			Animations.play("hit")
 			await Animations.animation_finished
 			call_deferred("queue_free")
+	
+	GameLoop = true
 			
-	Game_State = true
 
-func _ready() -> void:
-	movement_timer.start()
-	
-	$"Detection Area".body_entered.connect(
-		func(body: CharacterBody2D):
-			player = body
-	)
-	
-	$"Detection Area".body_exited.connect(
-		func(_body: CharacterBody2D):
-			player = null
-	)
-	
-	hurt_box_component.area_entered.connect(
-		func(_area: Area2D):
-			canAttack = true
-	)
-	
-	hurt_box_component.area_exited.connect(
-		func(_area: Area2D):
-			canAttack = false
-	)
+func Take_Damage(Power : float) -> void:
+	health -= Power
+	takeDamage = true
 
-func _physics_process(_delta: float) -> void:
-	velocity = direction * speed
-	move_and_slide()
-	
-	if velocity.normalized().x > 0:
-		Animations.flip_h = true
-	elif velocity.normalized().x < 0:
-		Animations.flip_h = false
+func _on_detection_area_body_entered(body: Node2D) -> void:
+	player = body
 
-func _process(_delta: float) -> void:
-	if Game_State:
-		Game_State = false
-	Game_Loop()
+func _on_detection_area_body_exited(_body: Node2D) -> void:
+	player = null
+
+func _on_movement_timer_timeout() -> void:
+	changeMovement = true
+
+func _on_attack_delay_timeout() -> void:
+	canAttack = true
+
+func _on_hurt_box_component_area_entered(_area: Area2D) -> void:
+	playerInRange = true
+	
+func _on_hurt_box_component_area_exited(_area: Area2D) -> void:
+	playerInRange = false

@@ -1,9 +1,10 @@
-[gd_scene load_steps=41 format=3 uid="uid://cxgrpymmn2brt"]
+[gd_scene load_steps=43 format=3 uid="uid://cxgrpymmn2brt"]
 
 [ext_resource type="Script" uid="uid://bh1myr5dpj85l" path="res://Scenes/Entities/Enemies/snail.gd" id="1_6th1h"]
 [ext_resource type="Texture2D" uid="uid://c8slatie8dpnx" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Snail/walk-Sheet.png" id="1_ixyh5"]
 [ext_resource type="Texture2D" uid="uid://5norw43kd01d" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Snail/all.png" id="1_nkprn"]
 [ext_resource type="Script" uid="uid://dwn5s6v5no107" path="res://Scenes/Components/hit_box_component.gd" id="4_w42jn"]
+[ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="5_tps66"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yb5gh"]
 atlas = ExtResource("1_nkprn")
@@ -262,6 +263,9 @@ radius = 100.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_w42jn"]
 radius = 17.4642
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_u8epv"]
+radius = 21.0238
+
 [node name="Snail" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 5
@@ -296,6 +300,17 @@ position = Vector2(-2, 5)
 shape = SubResource("CircleShape2D_w42jn")
 debug_color = Color(0.170513, 0.638958, 0.230272, 0.42)
 
+[node name="HurtBoxComponent" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("5_tps66")
+metadata/_custom_type_script = "uid://cbljtbydq410e"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(-2, 5)
+shape = SubResource("CircleShape2D_u8epv")
+debug_color = Color(0.866479, 0.121001, 0.177999, 0.42)
+
 [node name="Movement Timer" type="Timer" parent="."]
 wait_time = 2.5
 one_shot = true
@@ -303,3 +318,5 @@ one_shot = true
 [node name="Shell Timer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[connection signal="area_entered" from="HurtBoxComponent" to="." method="_on_hurt_box_component_area_entered"]
