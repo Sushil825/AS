@@ -1,0 +1,228 @@
+[gd_scene load_steps=48 format=3 uid="uid://bvi7xb8ee5xlo"]
+
+[ext_resource type="PackedScene" uid="uid://da58iwmbsviea" path="res://Scenes/Entities/Enemies/Swordsman/Base/swordsman_base.tscn" id="1_f0pgh"]
+[ext_resource type="Texture2D" uid="uid://bnn11denrdx62" path="res://Assets/CHIBI KNIGHT-PNG/03-Attack_/2D_KNIGHT__Attack_000.png" id="2_6j5hc"]
+[ext_resource type="Resource" uid="uid://bf4j6wwh5p4lf" path="res://Resources/Weapon/BaseSword.tres" id="2_oic4q"]
+[ext_resource type="Texture2D" uid="uid://dab7ye8i2lkc4" path="res://Assets/CHIBI KNIGHT-PNG/01-Idle_/2D_KNIGHT__Idle_000.png" id="2_qtdmy"]
+[ext_resource type="Texture2D" uid="uid://bgrnvmwoaljt7" path="res://Assets/CHIBI KNIGHT-PNG/03-Attack_/2D_KNIGHT__Attack_001.png" id="3_dw64f"]
+[ext_resource type="Texture2D" uid="uid://b1swduvf7fgm6" path="res://Assets/CHIBI KNIGHT-PNG/01-Idle_/2D_KNIGHT__Idle_001.png" id="3_f843i"]
+[ext_resource type="Resource" uid="uid://d2ugprfvgg05p" path="res://Resources/Attack/base_heavy_attack.tres" id="3_qjv0x"]
+[ext_resource type="Texture2D" uid="uid://b0qw7u52qx2ae" path="res://Assets/CHIBI KNIGHT-PNG/01-Idle_/2D_KNIGHT__Idle_002.png" id="4_i7x3v"]
+[ext_resource type="Texture2D" uid="uid://brd2w3ftvesm3" path="res://Assets/CHIBI KNIGHT-PNG/03-Attack_/2D_KNIGHT__Attack_002.png" id="4_oic4q"]
+[ext_resource type="Texture2D" uid="uid://c0pvhy5jdqyt0" path="res://Assets/CHIBI KNIGHT-PNG/01-Idle_/2D_KNIGHT__Idle_003.png" id="5_fu775"]
+[ext_resource type="Texture2D" uid="uid://wdluns4gx00" path="res://Assets/CHIBI KNIGHT-PNG/03-Attack_/2D_KNIGHT__Attack_003.png" id="5_qjv0x"]
+[ext_resource type="Texture2D" uid="uid://iutmv2tnn1bf" path="res://Assets/CHIBI KNIGHT-PNG/03-Attack_/2D_KNIGHT__Attack_004.png" id="6_jbftl"]
+[ext_resource type="Texture2D" uid="uid://ddmmn6uapfwam" path="res://Assets/CHIBI KNIGHT-PNG/03-Attack_/2D_KNIGHT__Attack_005.png" id="7_q5bnm"]
+[ext_resource type="Texture2D" uid="uid://d1iof6y1dfmnn" path="res://Assets/CHIBI KNIGHT-PNG/03-Attack_/2D_KNIGHT__Attack_006.png" id="8_4iqct"]
+[ext_resource type="Texture2D" uid="uid://dtmva2cphgd4t" path="res://Assets/CHIBI KNIGHT-PNG/03-Attack_/2D_KNIGHT__Attack_007.png" id="9_rnisw"]
+[ext_resource type="Texture2D" uid="uid://17drbxm5w40q" path="res://Assets/CHIBI KNIGHT-PNG/02-Run_/2D_KNIGHT__Run_000.png" id="14_nowcd"]
+[ext_resource type="Texture2D" uid="uid://cdt4gevkc4rb4" path="res://Assets/CHIBI KNIGHT-PNG/02-Run_/2D_KNIGHT__Run_001.png" id="15_c8j0t"]
+[ext_resource type="Texture2D" uid="uid://bladhdtqa1j40" path="res://Assets/CHIBI KNIGHT-PNG/02-Run_/2D_KNIGHT__Run_002.png" id="16_rvbn4"]
+[ext_resource type="Texture2D" uid="uid://n7qbwoqof4gv" path="res://Assets/CHIBI KNIGHT-PNG/02-Run_/2D_KNIGHT__Run_003.png" id="17_h0u2e"]
+[ext_resource type="Texture2D" uid="uid://c37dx5ca4pyph" path="res://Assets/CHIBI KNIGHT-PNG/02-Run_/2D_KNIGHT__Run_004.png" id="18_v3g6t"]
+[ext_resource type="Texture2D" uid="uid://dmaipv8bvwque" path="res://Assets/CHIBI KNIGHT-PNG/02-Run_/2D_KNIGHT__Run_005.png" id="19_0np6b"]
+[ext_resource type="Texture2D" uid="uid://2dydhxxdbca8" path="res://Assets/CHIBI KNIGHT-PNG/02-Run_/2D_KNIGHT__Run_006.png" id="20_mcjt5"]
+[ext_resource type="Texture2D" uid="uid://plustpeyv5n7" path="res://Assets/CHIBI KNIGHT-PNG/02-Run_/2D_KNIGHT__Run_007.png" id="21_lavqp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6j5hc"]
+radius = 25.0799
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dw64f"]
+radius = 19.0
+height = 54.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6j5hc"]
+size = Vector2(369, 77)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6y4v"]
+atlas = ExtResource("2_6j5hc")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lldfe"]
+atlas = ExtResource("3_dw64f")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x873f"]
+atlas = ExtResource("4_oic4q")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qyoy"]
+atlas = ExtResource("5_qjv0x")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bkk3f"]
+atlas = ExtResource("6_jbftl")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnfdp"]
+atlas = ExtResource("7_q5bnm")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emk31"]
+atlas = ExtResource("8_4iqct")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxa2x"]
+atlas = ExtResource("9_rnisw")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbwsr"]
+atlas = ExtResource("2_qtdmy")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2cc3"]
+atlas = ExtResource("3_f843i")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8uxp"]
+atlas = ExtResource("4_i7x3v")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2lo5b"]
+atlas = ExtResource("5_fu775")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pq50u"]
+atlas = ExtResource("14_nowcd")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7082o"]
+atlas = ExtResource("15_c8j0t")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iuoaf"]
+atlas = ExtResource("16_rvbn4")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thci7"]
+atlas = ExtResource("17_h0u2e")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hcnwf"]
+atlas = ExtResource("18_v3g6t")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k4o18"]
+atlas = ExtResource("19_0np6b")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4msei"]
+atlas = ExtResource("20_mcjt5")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aj6vj"]
+atlas = ExtResource("21_lavqp")
+region = Rect2(0, 0, 550, 598)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f0pgh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u6y4v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lldfe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x873f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2qyoy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bkk3f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnfdp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emk31")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxa2x")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbwsr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2cc3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j8uxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2lo5b")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pq50u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7082o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iuoaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_thci7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hcnwf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k4o18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4msei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aj6vj")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[node name="Knight" instance=ExtResource("1_f0pgh")]
+current_weapon = ExtResource("2_oic4q")
+enemy_attack = ExtResource("3_qjv0x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent" index="0"]
+position = Vector2(2, -2)
+shape = SubResource("CircleShape2D_6j5hc")
+debug_color = Color(0.280048, 0.612553, 0.440707, 0.42)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent" index="0"]
+position = Vector2(2, -3)
+shape = SubResource("CapsuleShape2D_dw64f")
+debug_color = Color(0.740181, 0.419495, 0.547003, 0.42)
+
+[node name="DashComponent" parent="CoreAbilities" index="1" node_paths=PackedStringArray("player", "sprite")]
+player = NodePath("../..")
+sprite = NodePath("../../AnimatedSprite2D")
+
+[node name="Detect" type="CollisionShape2D" parent="DetectionArea" index="0"]
+position = Vector2(3.5, -15.5)
+shape = SubResource("RectangleShape2D_6j5hc")
+
+[node name="TextureProgressBar" parent="Control" index="0"]
+offset_left = -31.0
+offset_top = -43.0
+offset_right = 33.0
+offset_bottom = -3.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="9"]
+position = Vector2(-2, 2)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_f0pgh")
+animation = &"run"
+flip_h = true

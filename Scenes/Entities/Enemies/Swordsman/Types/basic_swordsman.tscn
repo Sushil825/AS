@@ -1,18 +1,144 @@
-[gd_scene load_steps=7 format=3 uid="uid://bgfyrna8xchsg"]
+[gd_scene load_steps=26 format=3 uid="uid://bgfyrna8xchsg"]
 
 [ext_resource type="PackedScene" uid="uid://da58iwmbsviea" path="res://Scenes/Entities/Enemies/Swordsman/Base/swordsman_base.tscn" id="1_anyfx"]
 [ext_resource type="Resource" uid="uid://bf4j6wwh5p4lf" path="res://Resources/Weapon/BaseSword.tres" id="2_l87eh"]
 [ext_resource type="Resource" uid="uid://dwsfww5glec2a" path="res://Resources/Attack/base_light_attack.tres" id="3_efkif"]
+[ext_resource type="Texture2D" uid="uid://d2qnynhbxi8s8" path="res://Assets/Swordsman/Hero swordsman Attack.png" id="4_0wnoo"]
+[ext_resource type="Texture2D" uid="uid://ebavxtbxfpey" path="res://Assets/Swordsman/Hero swordsman idle.png" id="5_xfhsm"]
+[ext_resource type="Texture2D" uid="uid://hu3cl40pokma" path="res://Assets/Swordsman/Hero swordsman Run.png" id="6_pg4au"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l87eh"]
-radius = 33.0
+radius = 33.0151
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_anyfx"]
-radius = 12.0
+radius = 18.0
 height = 52.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l87eh"]
 size = Vector2(358, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s30jy"]
+atlas = ExtResource("4_0wnoo")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhalm"]
+atlas = ExtResource("4_0wnoo")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7b48"]
+atlas = ExtResource("4_0wnoo")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jwtg"]
+atlas = ExtResource("4_0wnoo")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hfwgp"]
+atlas = ExtResource("4_0wnoo")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibbqo"]
+atlas = ExtResource("5_xfhsm")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8wl6"]
+atlas = ExtResource("5_xfhsm")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ju6dp"]
+atlas = ExtResource("6_pg4au")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2cn88"]
+atlas = ExtResource("6_pg4au")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_icsee"]
+atlas = ExtResource("6_pg4au")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lk7w"]
+atlas = ExtResource("6_pg4au")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7y447"]
+atlas = ExtResource("6_pg4au")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jve8e"]
+atlas = ExtResource("6_pg4au")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf222"]
+atlas = ExtResource("6_pg4au")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_510rr"]
+atlas = ExtResource("6_pg4au")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7j22e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s30jy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fhalm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7b48")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jwtg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hfwgp")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibbqo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w8wl6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ju6dp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2cn88")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_icsee")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4lk7w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7y447")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jve8e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf222")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_510rr")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
 
 [node name="SwordsmanBase" instance=ExtResource("1_anyfx")]
 collision_layer = 65538
@@ -20,7 +146,7 @@ can_dodge = true
 current_weapon = ExtResource("2_l87eh")
 enemy_attack = ExtResource("3_efkif")
 
-[node name="HurtBoxComponent" parent="." index="1"]
+[node name="HurtBoxComponent" parent="." index="0"]
 collision_layer = 65536
 collision_mask = 0
 
@@ -33,18 +159,24 @@ position = Vector2(0, 7)
 shape = SubResource("CapsuleShape2D_anyfx")
 debug_color = Color(0.241599, 0.628628, 0.293732, 0.42)
 
-[node name="DashComponent" parent="CoreAbilities" index="1" node_paths=PackedStringArray("player", "sprite")]
+[node name="DashComponent" parent="CoreAbilities" index="1" node_paths=PackedStringArray("player")]
 player = NodePath("../..")
-sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="DodgeComponent" parent="CoreAbilities" index="2" node_paths=PackedStringArray("player", "sprite")]
+[node name="DodgeComponent" parent="CoreAbilities" index="2" node_paths=PackedStringArray("player")]
 player = NodePath("../..")
-sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="DetectionArea" parent="." index="8"]
+[node name="DetectionArea" parent="." index="7"]
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" index="0"]
-position = Vector2(3, 4.5)
+position = Vector2(3, 0)
 shape = SubResource("RectangleShape2D_l87eh")
 debug_color = Color(0.596078, 0.498039, 0.603922, 0.32549)
+
+[node name="TextureProgressBar" parent="Control" index="0"]
+offset_left = -31.0
+offset_right = 33.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="9"]
+sprite_frames = SubResource("SpriteFrames_7j22e")
+animation = &"run"

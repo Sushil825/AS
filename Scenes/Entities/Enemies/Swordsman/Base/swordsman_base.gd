@@ -52,6 +52,7 @@ signal player_detected(player:Node2D)
 @export var pursuit_range:float=200.0
 @export var dodge_chance:float=0.3
 @export var parry_chance:float=0.2
+@export var dash_chance:float=0.3
 @export var attack_duration:float=1.0
 
 
@@ -295,7 +296,7 @@ func update_animation():
 		ENEMYSTATE.RUN:
 			animated_sprite_2d.play("run")
 		ENEMYSTATE.ATTACK:
-			animated_sprite_2d.play("side_attack")
+			animated_sprite_2d.play("attack")
 			if player:
 				hit_box_component.knockback_direction.x = (player.global_position - self.global_position).normalized().x
 				player.Hurtbox_component.take_hit(hit_box_component)
@@ -347,3 +348,4 @@ func _process(delta: float) -> void:
 
 func Take_Damage(Power : float) -> void:
 	health_component.take_damage(Power)
+	hurt_box_component.create_hit_effect()

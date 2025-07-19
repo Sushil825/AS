@@ -9,4 +9,6 @@ type = 1
 range = 30.0
 knockback_force = 2.0
 animation_name = ""
+can_be_parried = true
+can_be_dodged = true
 metadata/_custom_type_script = "uid://bt2stluxt8sqw"
