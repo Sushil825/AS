@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://b6rh8xuyyfvq"]
+[gd_scene load_steps=10 format=4 uid="uid://b6rh8xuyyfvq"]
 
 [ext_resource type="Texture2D" uid="uid://dfeuspbre811" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Background/Background.png" id="1_1b02i"]
 [ext_resource type="Script" uid="uid://bfjf7n5cnuoo8" path="res://Scenes/TileSet/jungle_map.gd" id="1_cxiej"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://sja4gr0plns4" path="res://Scenes/Entities/Enemies/small_bee.tscn" id="4_tgldr"]
 [ext_resource type="PackedScene" uid="uid://cxgrpymmn2brt" path="res://Scenes/Entities/Enemies/snail.tscn" id="5_go8p0"]
 [ext_resource type="PackedScene" uid="uid://voyfmt3j2sk1" path="res://Scenes/Entities/Enemies/boar.tscn" id="6_cxiej"]
+[ext_resource type="PackedScene" uid="uid://bgfyrna8xchsg" path="res://Scenes/Entities/Enemies/Swordsman/Types/basic_swordsman.tscn" id="8_vrcvg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vrcvg"]
 size = Vector2(65.5, 65)
@@ -58,5 +59,9 @@ collision_layer = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Change_Scene"]
 position = Vector2(1161, 25)
 shape = SubResource("RectangleShape2D_vrcvg")
+
+[node name="SwordsmanBase" parent="." instance=ExtResource("8_vrcvg")]
+position = Vector2(252, 561)
+collision_layer = 2
 
 [connection signal="body_entered" from="Change_Scene" to="." method="_on_change_scene_body_entered"]

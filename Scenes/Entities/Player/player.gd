@@ -24,13 +24,28 @@ enum PlayerState{
 
 @export var direction: Vector2 = Vector2.ZERO
 @export var debug_mode:bool=false
+@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
+var prev_dir=Vector2.RIGHT
 var current_state:PlayerState=PlayerState.IDLE
 var previous_state:PlayerState=PlayerState.IDLE
 
 var Enemy : CharacterBody2D = null
 var Attack_Type : AttackData.Type = AttackData.Type.LIGHT
 
+
+@export var light_attack_audio: AudioStream
+@export var heavy_attack_audio: AudioStream
+@export var jump_audio: AudioStream
+@export var land_audio: AudioStream
+@export var dash_audio: AudioStream
+@export var hurt_audio: AudioStream
+
+
+func play_audio(audio_stream: AudioStream):
+	if audio_stream and audio_player:
+		audio_player.stream = audio_stream
+		audio_player.play()
 
 func _ready() -> void:
 	#Connect all the signal from the components
@@ -74,7 +89,10 @@ func _physics_process(_delta: float) -> void:
 
 func _get_input_direction():
 	direction=movement_component.get_direction()
-
+	set_prev_direction()
+func set_prev_direction():
+	if direction!=Vector2.ZERO:
+		prev_dir=direction
 
 func enter_state(state:PlayerState):
 	
@@ -98,10 +116,14 @@ func enter_state(state:PlayerState):
 			#Checking jump states in order
 			if movement_component.is_on_ground() and movement_component.just_landed():
 				animated_sprite_2d.play("jump_end")
+				play_audio(jump_audio)
 			elif movement_component.is_in_air():
 				animated_sprite_2d.play("in_air")
 			elif movement_component.is_Jumping() or movement_component.just_jumped():
 				animated_sprite_2d.play("jump_start")
+				play_audio(jump_audio)
+		PlayerState.DASHING:
+			play_audio(dash_audio)
 
 func exit_state(state:PlayerState):
 	if debug_mode:
@@ -136,7 +158,8 @@ func _input(event: InputEvent) -> void:
 					attack_component.perform_heavy_attack()
 			elif event.is_action_pressed("dash"):
 				change_state(PlayerState.DASHING)
-				dash_component.perform_dash(direction)
+				dash_component.perform_dash(prev_dir)
+				print(direction)
 			elif event.is_action_pressed("dodge"):
 				change_state(PlayerState.DODGING)
 				dodge_component.perform_dodge()
@@ -151,6 +174,12 @@ func _input(event: InputEvent) -> void:
 					change_state(PlayerState.DASHING)
 					dash_component.perform_dash(direction)
 					
+					
+		PlayerState.JUMPING:
+			if event.is_action_pressed("dash"):
+				if dash_component.can_dash:
+					change_state(PlayerState.DASHING)
+					dash_component.perform_dash(prev_dir)
 
 #Handling Idle state
 
