@@ -21,6 +21,7 @@ signal player_detected(player:Node2D)
 
 #Components
 @onready var hurt_box_component: HurtBoxComponent = $HurtBoxComponent
+@onready var hit_box_component: HitBoxComponent = $HitBoxComponent
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_component: AttackComponent = $AttackComponent
 @onready var parry_component: ParryComponent = $CoreAbilities/ParryComponent
@@ -29,6 +30,7 @@ signal player_detected(player:Node2D)
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var enemy_movement_component: EnemyMovementComponent = $EnemyMovementComponent
 @onready var detection_area: Area2D = $DetectionArea
+@onready var texture_progress_bar: TextureProgressBar = $Control/TextureProgressBar
 
 #Toggleable abilities
 @export var can_dash:bool=false
@@ -59,7 +61,6 @@ var previous_state:ENEMYSTATE=ENEMYSTATE.IDLE
 var can_change_state:bool=true
 
 
-
 #Target
 
 var player_target:Node2D=null
@@ -73,6 +74,8 @@ var attack_start_time:float=0.0
 var initial_position:Vector2
 var patrol_points:Array[Vector2]=[]
 var current_patrol_index:int=0
+
+var player : CharacterBody2D = null
 
 func _ready() -> void:
 	
@@ -134,6 +137,11 @@ func connect_signals():
 	if detection_area:
 		detection_area.body_entered.connect(_on_player_entered)
 		detection_area.body_exited.connect(_on_player_exited)
+	
+	if hurt_box_component:
+		hurt_box_component.area_entered.connect(func(area: Area2D): player = area.get_parent())
+		hurt_box_component.area_exited.connect(func(area: Area2D): player = null)
+		
 
 func _physics_process(delta: float) -> void:
 	state_timer+=delta
@@ -288,8 +296,11 @@ func update_animation():
 			animated_sprite_2d.play("run")
 		ENEMYSTATE.ATTACK:
 			animated_sprite_2d.play("side_attack")
+			if player:
+				hit_box_component.knockback_direction.x = (player.global_position - self.global_position).normalized().x
+				player.Hurtbox_component.take_hit(hit_box_component)
+			await animated_sprite_2d.animation_finished
 			
-	
 	if player_target:
 		animated_sprite_2d.flip_h=player_target.global_position.x<global_position.x
 
@@ -333,3 +344,6 @@ func _on_player_exited(body:Node2D):
 
 func _process(delta: float) -> void:
 	pass
+
+func Take_Damage(Power : float) -> void:
+	health_component.take_damage(Power)
