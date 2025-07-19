@@ -346,8 +346,9 @@ debug_color = Color(0.865293, 0.305326, 0.480601, 0.42)
 
 [node name="HitBoxComponent" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 64
+collision_mask = 65600
 script = ExtResource("10_qtr04")
+hit_tags = Array[String]([])
 metadata/_custom_type_script = "uid://dwn5s6v5no107"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
