@@ -47,6 +47,10 @@ signal player_detected(player:Node2D)
 @export var idle_move_chance:float=0.3
 @export var idle_move_interval:float=2.0
 @export var attack_cooldown:float=2.0
+@export var pursuit_range:float=200.0
+@export var dodge_chance:float=0.3
+@export var parry_chance:float=0.2
+@export var attack_duration:float=1.0
 
 
 #States management vars
@@ -60,14 +64,31 @@ var can_change_state:bool=true
 
 var player_target:Node2D=null
 var last_attack_time:float=0.0
+var state_timer:float=0.0
+var idle_timer:float=0.0
+var attack_start_time:float=0.0
 
+
+#AI behaviorus
+var initial_position:Vector2
+var patrol_points:Array[Vector2]=[]
+var current_patrol_index:int=0
 
 func _ready() -> void:
 	
 	setup_component()
 	connect_signals()
+	initial_position=global_position
+	setup_patrol_points()
 	
 	
+
+func setup_patrol_points():
+	patrol_points.clear()
+	patrol_points.append(initial_position+Vector2(-50,0))
+	patrol_points.append(initial_position+Vector2(50,0))
+	patrol_points.append(initial_position+Vector2(0,-50))
+	patrol_points.append(initial_position+Vector2(0,-50))
 
 func setup_component():
 	if enemy_movement_component:
@@ -79,6 +100,10 @@ func setup_component():
 	if health_component:
 		health_component.max_health=100.0
 		health_component.current_health=100.0
+
+
+func take_damage(damage:float):
+	pass
 
 func connect_signals():
 	if attack_component:
@@ -111,41 +136,110 @@ func connect_signals():
 		detection_area.body_exited.connect(_on_player_exited)
 
 func _physics_process(delta: float) -> void:
-	
-	update_ai()
-	if debug_mode:
-		print(enemy_movement_component.current_velocity)
+	state_timer+=delta
+	idle_timer+=delta
+	update_ai(delta)
 	update_animation()
+	
 
-func update_ai():
-	print(player_target,current_state)
+func update_ai(delta:float):
 	match current_state:
 		ENEMYSTATE.IDLE:
-			if player_target:
-				change_state(ENEMYSTATE.RUN)
-			if not player_target:
-				pass
-				
+			handle_idle_state(delta)
 		ENEMYSTATE.RUN:
-			if not player_target:
-				change_state(ENEMYSTATE.IDLE)
-				return
-				
-			var distance=global_position.distance_to(player_target.global_position)
-			
-			if distance<=attack_range and can_attack():
-				change_state(ENEMYSTATE.ATTACK)
-			else:
-				enemy_movement_component.move_towards(player_target.global_position)
+			handle_run_state(delta)
 			
 		ENEMYSTATE.ATTACK:
-			enemy_movement_component.stop_movement()
+			handle_attack_state(delta)
 			
 		ENEMYSTATE.STUNNED:
-			enemy_movement_component.stop_movement()
+			handle_stunned_state(delta)
 			
 		ENEMYSTATE.HURT:
-			enemy_movement_component.stop_movement()
+			handle_hurt_state(delta)
+
+func handle_idle_state(delta:float):
+	if enemy_movement_component:
+		enemy_movement_component.stop_movement()
+		
+	#Check for player
+	if player_target and is_instance_valid(player_target):
+		change_state(ENEMYSTATE.RUN)
+		return
+		
+		
+	#Random movement when idle
+	
+	if idle_timer>=idle_move_interval:
+		idle_timer=0
+		if randf()<idle_move_chance and patrol_points.size()>0:
+			var target_point=patrol_points[current_patrol_index]
+			current_patrol_index=(current_patrol_index+1)%patrol_points.size()
+			if enemy_movement_component:
+				enemy_movement_component.move_towards(target_point)
+				
+				
+				
+func handle_run_state(delta:float):
+	if not player_target or not is_instance_valid(player_target):
+		change_state(ENEMYSTATE.IDLE)
+		return
+		
+	var distance=global_position.distance_to(player_target.global_position)
+	
+	if distance>pursuit_range:
+		change_state(ENEMYSTATE.IDLE)
+		return
+		
+	if distance<=attack_range and can_attack():
+		#ADD dodge and parry here ig
+		
+		
+		change_state(ENEMYSTATE.ATTACK)
+		
+	else:
+		if enemy_movement_component:
+			enemy_movement_component.move_towards(player_target.global_position)
+		
+
+func handle_attack_state(delta:float):
+	
+	if enemy_movement_component:
+		enemy_movement_component.stop_movement()
+		
+	if state_timer<0.1:#Small delay
+		perform_attack()
+		
+	if state_timer>=attack_duration:
+		if player_target and is_instance_valid(player_target):
+			var distance=global_position.distance_to(player_target.global_position)
+			if distance<=pursuit_range:
+				change_state(ENEMYSTATE.RUN)
+			else:
+				change_state(ENEMYSTATE.IDLE)
+				
+		else:
+			change_state(ENEMYSTATE.IDLE)
+			
+			
+
+func handle_stunned_state(delta:float):
+	enemy_movement_component.stop_movement()
+	
+	if state_timer>=2.0:
+		if player_target and is_instance_valid(player_target):
+			change_state(ENEMYSTATE.RUN)
+		else:
+			change_state(ENEMYSTATE.IDLE)
+			
+			
+func handle_hurt_state(delta:float):
+	enemy_movement_component.stop_movement()
+	if state_timer>=0.5:
+		if player_target and is_instance_valid(player_target):
+			change_state(ENEMYSTATE.RUN)
+		else:
+			change_state(ENEMYSTATE.IDLE)
 
 func can_attack():
 	var current_time=Time.get_ticks_msec()/1000
@@ -157,19 +251,26 @@ func change_state(new_state:ENEMYSTATE):
 	
 	previous_state=current_state
 	current_state=new_state
-	state_changed.emit(previous_state,current_state)
 	
+	state_timer=0
 	match current_state:
-		ENEMYSTATE.ATTACK:
+		ENEMYSTATE.IDLE:
+			enemy_movement_component.stop_movement()
+			
+		ENEMYSTATE.RUN:
 			pass
+		ENEMYSTATE.ATTACK:
+			attack_start_time=Time.get_ticks_msec()/1000
 		ENEMYSTATE.PARRY:
 			pass
 			
 		ENEMYSTATE.DODGE:
 			pass
 		ENEMYSTATE.DASH:
-			pass
-
+			if dash_component and player_target:
+				var dash_direction=(player_target.global_position-global_position).normalized()
+				dash_component.perform_dash(dash_direction)
+	state_changed.emit(previous_state,current_state)
 
 func perform_attack():
 	if attack_component and enemy_attack:
@@ -223,6 +324,8 @@ func _on_player_entered(body:Node2D):
 	if body.is_in_group("player"):
 		player_target=body
 		player_detected.emit(body)
+		if current_state==ENEMYSTATE.IDLE:
+			change_state(ENEMYSTATE.RUN)
 
 func _on_player_exited(body:Node2D):
 	if body.is_in_group("player"):
