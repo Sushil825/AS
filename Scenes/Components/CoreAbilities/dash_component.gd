@@ -12,9 +12,13 @@ signal dash_ended
 @export var player:CharacterBody2D
 @export var sprite:AnimatedSprite2D
 
+
+@export var use_raycast_collision:bool=true
+
 var can_dash:bool=true
 var is_dashing:bool=false
 var dash_tween:Tween
+var original_vel:Vector2
 
 
 func _ready() -> void:
@@ -33,13 +37,18 @@ func perform_dash(direction:Vector2):
 		return
 	can_dash=false
 	is_dashing=true
+	original_vel=player.velocity
 	dash_started.emit()
 	
 	#Dash logic here
 	
 	start_dash_effect()
 	#Perform dash
-	await  dash_movement(direction)
+	
+	if use_raycast_collision:
+		await dash_with_collision_detection(direction)
+	else:
+		await  dash_movement(direction)
 	
 	#End dash
 	
@@ -51,7 +60,55 @@ func perform_dash(direction:Vector2):
 	can_dash=true
 
 
+func dash_with_collision_detection(direction:Vector2):
+	
+	var space_state=player.get_world_2d().direct_space_state
+	var start_pos=player.global_position
+	
+	var query=PhysicsRayQueryParameters2D.create(
+		start_pos,
+		start_pos+direction*dash_distance
+	)
+	
+	
+	query.collision_mask=player.collision_mask
+	query.exclude=[player.get_rid()]
+	var result=space_state.intersect_ray(query)
+	
+	var target_pos:Vector2
+	
+	if result:
+		#If hit something stop
+		
+		var hit_point=result.position
+		var safe_distance=16
+		target_pos=hit_point-direction*safe_distance
+		
+	else:
+		
+		target_pos=start_pos+direction*dash_distance
 
+	dash_tween=create_tween()
+	dash_tween.set_ease(Tween.EASE_OUT)
+	dash_tween.set_trans(Tween.TRANS_QUART)
+	
+	var distance_to_travel=start_pos.distance_to(target_pos)
+	var current_distance=0.0
+	
+	dash_tween.tween_method(
+		func(distance:float):
+			var progress=distance/distance_to_travel if distance_to_travel>0 else 1.0
+			var new_pos=start_pos.lerp(target_pos,progress)
+			player.velocity=(new_pos-player.global_position)/get_physics_process_delta_time()
+			player.move_and_slide(),
+			0.0,
+			distance_to_travel,
+			dash_duration
+			)
+			
+	await dash_tween.finished
+	player.velocity=Vector2.ZERO
+	
 func dash_movement(direction:Vector2):
 	
 	var start_pos=player.global_position
@@ -114,7 +171,8 @@ func end_dash_effect():
 	
 func create_afterimage():
 	
-	var afterimage_count=8
+	var afterimage_count=5
+	
 	var afterimage_duration=dash_duration*1.5
 	
 	for i in range(afterimage_count):

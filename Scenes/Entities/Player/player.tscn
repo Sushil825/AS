@@ -1,19 +1,24 @@
-[gd_scene load_steps=61 format=3 uid="uid://cou2lca40qdxl"]
+[gd_scene load_steps=66 format=3 uid="uid://cou2lca40qdxl"]
 
 [ext_resource type="Texture2D" uid="uid://pttpo6wfmcsq" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_4ffj5"]
 [ext_resource type="Script" uid="uid://dj0lg7bkycc4m" path="res://Scenes/Entities/Player/player.gd" id="1_rx582"]
 [ext_resource type="Material" uid="uid://d1q7ddmemlsgn" path="res://Resources/Shaders/dash_material.tres" id="2_hkmxn"]
 [ext_resource type="Texture2D" uid="uid://dq23t14l2g002" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Attack-01/Attack-01-Sheet.png" id="2_i4twt"]
+[ext_resource type="AudioStream" uid="uid://duv7ji3c4u2k" path="res://Assets/Sounds/Player/SwordLight.wav" id="2_mt20e"]
 [ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="2_rx582"]
+[ext_resource type="AudioStream" uid="uid://uw08k3mrv7am" path="res://Assets/Sounds/Player/Swordheavy.wav" id="3_50st8"]
 [ext_resource type="Script" uid="uid://dlf30ooli6jr" path="res://Scenes/Components/health_component.gd" id="3_rx582"]
 [ext_resource type="Texture2D" uid="uid://cy6oa5058are5" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Jump-Start/Jump-Start-Sheet.png" id="4_0fwr3"]
 [ext_resource type="Texture2D" uid="uid://ilfgidbd63yk" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Run/Run-Sheet.png" id="4_0yfgq"]
+[ext_resource type="AudioStream" uid="uid://cgnibop2on1pj" path="res://Assets/Sounds/Player/Jump.wav" id="4_1ee1x"]
 [ext_resource type="Texture2D" uid="uid://cnxobqfoxii6i" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Jumlp-All/Jump-All-Sheet.png" id="4_p22ti"]
 [ext_resource type="Script" uid="uid://bh04okmk0y7f" path="res://Scenes/Components/CoreAbilities/dodge_component.gd" id="4_y6hyn"]
 [ext_resource type="Script" uid="uid://c60wdk640jber" path="res://Scenes/Components/CoreAbilities/dash_component.gd" id="5_75l7y"]
 [ext_resource type="Texture2D" uid="uid://bm4ga3y8tn358" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Jump-End/Jump-End-Sheet.png" id="5_hkmxn"]
+[ext_resource type="AudioStream" uid="uid://ckvoh4tuq4mo2" path="res://Assets/Sounds/Player/Dash.wav" id="5_wl017"]
 [ext_resource type="Script" uid="uid://b7pywml3u85jn" path="res://Scenes/Components/CoreAbilities/parry_component.gd" id="6_5o8lj"]
 [ext_resource type="Script" uid="uid://x2gfe5eqhe3q" path="res://Scenes/Components/Movements/movement_component.gd" id="6_q8fdp"]
+[ext_resource type="AudioStream" uid="uid://wm52ac2sks2g" path="res://Assets/Sounds/Player/Hurt.wav" id="6_sajyx"]
 [ext_resource type="Script" uid="uid://dwn5s6v5no107" path="res://Scenes/Components/hit_box_component.gd" id="10_qtr04"]
 [ext_resource type="Script" uid="uid://c0aresow0k4hg" path="res://Scenes/Components/WeaponAttack/attack_component.gd" id="15_hkmxn"]
 [ext_resource type="PackedScene" uid="uid://72br7ke1iwip" path="res://Scenes/Components/camera_component.tscn" id="17_oedhw"]
@@ -325,6 +330,12 @@ height = 50.0
 texture_filter = 1
 collision_mask = 6
 script = ExtResource("1_rx582")
+light_attack_audio = ExtResource("2_mt20e")
+heavy_attack_audio = ExtResource("3_50st8")
+jump_audio = ExtResource("4_1ee1x")
+land_audio = ExtResource("4_1ee1x")
+dash_audio = ExtResource("5_wl017")
+hurt_audio = ExtResource("6_sajyx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -416,3 +427,5 @@ texture_over = ExtResource("18_s4doi")
 texture_progress = ExtResource("20_o25qk")
 script = ExtResource("21_o25qk")
 health_component = NodePath("../../HealthComponent")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

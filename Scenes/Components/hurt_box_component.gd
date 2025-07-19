@@ -30,7 +30,6 @@ func _on_area_entered(area:Area2D):
 			
 			
 func take_hit(hitbox:HitBoxComponent):
-	print("took hit")
 	if not health_component:
 		return
 	var damage=hitbox.damage

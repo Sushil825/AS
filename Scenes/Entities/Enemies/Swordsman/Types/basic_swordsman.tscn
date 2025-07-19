@@ -1,8 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://bgfyrna8xchsg"]
+[gd_scene load_steps=25 format=3 uid="uid://bgfyrna8xchsg"]
 
 [ext_resource type="PackedScene" uid="uid://da58iwmbsviea" path="res://Scenes/Entities/Enemies/Swordsman/Base/swordsman_base.tscn" id="1_anyfx"]
-[ext_resource type="Resource" uid="uid://bf4j6wwh5p4lf" path="res://Resources/Weapon/BaseSword.tres" id="2_l87eh"]
-[ext_resource type="Resource" uid="uid://dwsfww5glec2a" path="res://Resources/Attack/base_light_attack.tres" id="3_efkif"]
+[ext_resource type="Script" uid="uid://blkyu8v8rpjlj" path="res://Scenes/Entities/Enemies/Swordsman/Types/basic_swordsman.gd" id="2_dx6ih"]
 [ext_resource type="Texture2D" uid="uid://d2qnynhbxi8s8" path="res://Assets/Swordsman/Hero swordsman Attack.png" id="4_0wnoo"]
 [ext_resource type="Texture2D" uid="uid://ebavxtbxfpey" path="res://Assets/Swordsman/Hero swordsman idle.png" id="5_xfhsm"]
 [ext_resource type="Texture2D" uid="uid://hu3cl40pokma" path="res://Assets/Swordsman/Hero swordsman Run.png" id="6_pg4au"]
@@ -142,9 +141,9 @@ animations = [{
 
 [node name="SwordsmanBase" instance=ExtResource("1_anyfx")]
 collision_layer = 65538
+script = ExtResource("2_dx6ih")
 can_dodge = true
-current_weapon = ExtResource("2_l87eh")
-enemy_attack = ExtResource("3_efkif")
+move_speed = 50.0
 
 [node name="HurtBoxComponent" parent="." index="0"]
 collision_layer = 65536
@@ -158,6 +157,9 @@ debug_color = Color(0.854902, 0.341176, 0.352941, 0.419608)
 position = Vector2(0, 7)
 shape = SubResource("CapsuleShape2D_anyfx")
 debug_color = Color(0.241599, 0.628628, 0.293732, 0.42)
+
+[node name="HealthComponent" parent="." index="2"]
+max_health = 100
 
 [node name="DashComponent" parent="CoreAbilities" index="1" node_paths=PackedStringArray("player")]
 player = NodePath("../..")
