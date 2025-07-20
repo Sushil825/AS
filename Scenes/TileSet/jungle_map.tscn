@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cxgrpymmn2brt" path="res://Scenes/Entities/Enemies/snail.tscn" id="5_go8p0"]
 [ext_resource type="PackedScene" uid="uid://voyfmt3j2sk1" path="res://Scenes/Entities/Enemies/boar.tscn" id="6_cxiej"]
 [ext_resource type="PackedScene" uid="uid://bgfyrna8xchsg" path="res://Scenes/Entities/Enemies/Swordsman/Types/basic_swordsman.tscn" id="8_vrcvg"]
+[ext_resource type="PackedScene" uid="uid://dj5s20fif1pre" path="res://Scenes/player_died.tscn" id="9_gkpjs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vrcvg"]
 size = Vector2(63, 44)
@@ -63,5 +64,7 @@ shape = SubResource("RectangleShape2D_vrcvg")
 [node name="SwordsmanBase" parent="." instance=ExtResource("8_vrcvg")]
 position = Vector2(252, 561)
 collision_layer = 2
+
+[node name="Player_Died" parent="." instance=ExtResource("9_gkpjs")]
 
 [connection signal="body_entered" from="Change_Scene" to="." method="_on_change_scene_body_entered"]

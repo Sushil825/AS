@@ -19,6 +19,9 @@ var direction : Vector2 = Vector2.ZERO
 var jump: bool = false
 var faster_fall : bool = false
 
+var jumps_remaining:int=1
+var max_jumps:int=1
+
 
 #Vars to handle to track jump states
 var was_on_floor_last_frame:bool=false
@@ -53,6 +56,11 @@ func _process(delta: float) -> void:
 	jump_started_this_frame=false
 	landed_this_frame=false
 	
+	max_jumps=2 if Player.has_double_jump else 1
+	
+	if Player.is_on_floor():
+		jumps_remaining=max_jumps
+	
 	#gravity
 	Player.velocity.y += gravity * delta
 	Player.velocity.y = Player.velocity.y / 2 if faster_fall and Player.velocity.y < 0 else Player.velocity.y
@@ -77,10 +85,20 @@ func _process(delta: float) -> void:
 		Player.velocity.x = move_toward(Player.velocity.x, 0, friction * delta)
 	
 	# motion in y axis
-	if jump or Jump_Buffer.time_left and Player.is_on_floor():
-		Player.velocity.y = -jump_strenght
-		jump = false
-		faster_fall = false
+	if jump:
+		if Player.is_on_floor() or jumps_remaining>0:
+			Player.velocity.y=-jump_strenght*Player.jump_mult
+			jump=false
+			faster_fall=false
+			jump_started_this_frame=true
+			
+			if not Player.is_on_floor():
+				jumps_remaining-=1
+				
+	elif Jump_Buffer.time_left and Player.is_on_floor():
+		Player.velocity.y=-jump_strenght*Player.jump_mult
+		faster_fall=false
+		jump_started_this_frame=true
 	
 	Player.move_and_slide()
 	

@@ -175,12 +175,6 @@ func _input(event: InputEvent) -> void:
 				change_state(PlayerState.DASHING)
 				dash_component.perform_dash(prev_dir)
 				print(direction)
-			elif event.is_action_pressed("dodge"):
-				change_state(PlayerState.DODGING)
-				dodge_component.perform_dodge()
-			elif event.is_action_pressed("parry"):
-				change_state(PlayerState.PARRYING)
-				parry_component.attempt_parry()
 				
 		PlayerState.ATTACKING:
 			if event.is_action_pressed("dash"):
