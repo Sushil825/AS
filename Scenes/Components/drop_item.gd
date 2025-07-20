@@ -24,7 +24,7 @@ var drop_data={
 	DropType.SPEED_BOOST:{
 		"name":"Speed Boost",
 		"color":Color.GREEN,
-		"duration":8.0,
+		"duration":12.0,
 		"texture":preload("res://Assets/buffs/speed.png")
 	},
 	DropType.FIREBALL:{
@@ -36,19 +36,19 @@ var drop_data={
 	DropType.JUMP_BOOST:{
 		"name":"Jump Boost",
 		"color":Color.SKY_BLUE,
-		"duration":10.0,
+		"duration":12.0,
 		"texture":preload("res://Assets/buffs/jump.png")
 	},
 	DropType.SHIELD:{
 		"name":"Shield",
 		"color":Color.SILVER,
-		"duration":10.0,
+		"duration":8.0,
 		"texture":preload("res://Assets/buffs/shield.png")
 	},
 	DropType.HEALTH:{
 		"name":"Health",
 		"color":Color.HOT_PINK,
-		"duration":11.0,
+		"duration":0.0,
 		"texture":preload("res://Assets/buffs/life.png")
 	},
 	DropType.DOUBLE_JUMP:{

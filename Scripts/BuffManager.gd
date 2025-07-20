@@ -19,18 +19,18 @@ func apply_buff(buff_type:DropItem.DropType,player):
 		
 	match buff_type:
 		DropItem.DropType.SPEED_BOOST:
-			player.speed_multiplier=1.5
+			player.speed_multiplier=1.8
 		DropItem.DropType.FIREBALL:
 			player.has_fireball=true
 			
 		DropItem.DropType.JUMP_BOOST:
-			player.jump_mult=1.4
+			player.jump_mult=1.5
 			
 		DropItem.DropType.SHIELD:
 			player.has_shield=true
 			
 		DropItem.DropType.HEALTH:
-			player.heal(30)
+			player.heal(40)
 			return
 			
 		DropItem.DropType.DOUBLE_JUMP:
@@ -57,6 +57,11 @@ func remove_buff(buff_name:String,player):
 	var timer=active_buffs[buff_name]
 	timer.queue_free()
 	active_buffs.erase(buff_name)
+	
+	
+	if not is_instance_valid(player):
+		buff_expired.emit(buff_name)
+		return
 	
 	match buff_name:
 		"Speed Boost":

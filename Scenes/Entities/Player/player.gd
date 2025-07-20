@@ -49,6 +49,9 @@ var Attack_Type : AttackData.Type = AttackData.Type.LIGHT
 @export var land_audio: AudioStream
 @export var dash_audio: AudioStream
 @export var hurt_audio: AudioStream
+@export var main_audio:AudioStream
+
+@onready var main_theme: AudioStreamPlayer2D = $MainTheme
 
 
 func play_audio(audio_stream: AudioStream):
@@ -64,7 +67,14 @@ func heal(amount:float):
 	healthComponent.heal(amount)
 
 func _ready() -> void:
+	
+	if main_theme and main_audio:
+		main_theme.stream=main_audio
+		main_audio.loop=true
+		main_theme.play()
+	
 	#Connect all the signal from the components
+	
 	attack_component.attack_performed.connect(_on_attack_performed)
 	attack_component.attack_finished.connect(_on_attack_finished)
 	dash_component.dash_started.connect(_on_dash_started)
@@ -77,6 +87,14 @@ func _ready() -> void:
 	healthComponent.died.connect(func(): call_deferred("queue_free"))
 
 func _physics_process(_delta: float) -> void:
+	
+	#Change pitches according to state
+	
+	if BuffManager.active_buffs.has("Speed Boost"):
+		main_theme.pitch_scale=1.5
+	else:
+		main_theme.pitch_scale=1.0
+	
 	_get_input_direction()
 	if debug_mode:
 		print("Current_State: ",PlayerState.keys()[current_state],
@@ -167,10 +185,13 @@ func _input(event: InputEvent) -> void:
 				if attack_component.can_attack():
 					change_state(PlayerState.ATTACKING)
 					attack_component.perform_light_attack()
+					play_audio(light_attack_audio)
+					
 			elif event.is_action_pressed("heavy_attack"):
 				if attack_component.can_attack():
 					change_state(PlayerState.ATTACKING)
 					attack_component.perform_heavy_attack()
+					play_audio(heavy_attack_audio)
 			elif event.is_action_pressed("dash"):
 				change_state(PlayerState.DASHING)
 				dash_component.perform_dash(prev_dir)

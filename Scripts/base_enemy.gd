@@ -8,8 +8,8 @@ class_name Enemy
 
 var drop_chances={
 	"boar":[
-		{"type":DropItem.DropType.SPEED_BOOST,"chance":0.4},
-		{"type":DropItem.DropType.HEALTH,"chance":0.3},
+		{"type":DropItem.DropType.SPEED_BOOST,"chance":0.5},
+		{"type":DropItem.DropType.HEALTH,"chance":0.4},
 		{"type":DropItem.DropType.SHIELD,"chance":0.2}
 	],
 	"snail":[
@@ -18,9 +18,9 @@ var drop_chances={
 		{"type":DropItem.DropType.HEALTH,"chance":0.2}
 	],
 	"swordsman":[
-		{"type":DropItem.DropType.FIREBALL,"chance":0.4},
-		{"type":DropItem.DropType.SHIELD,"chance":0.3},
-		{"type":DropItem.DropType.SPEED_BOOST,"chance":0.2}
+		{"type":DropItem.DropType.DOUBLE_JUMP,"chance":0.4},
+		{"type":DropItem.DropType.SHIELD,"chance":0.2},
+		{"type":DropItem.DropType.SPEED_BOOST,"chance":0.4}
 	],
 	"bee":[
 		{"type":DropItem.DropType.DOUBLE_JUMP,"chance":0.5},

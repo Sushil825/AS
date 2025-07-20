@@ -1,8 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://bgfyrna8xchsg"]
+[gd_scene load_steps=27 format=3 uid="uid://bgfyrna8xchsg"]
 
 [ext_resource type="PackedScene" uid="uid://da58iwmbsviea" path="res://Scenes/Entities/Enemies/Swordsman/Base/swordsman_base.tscn" id="1_anyfx"]
 [ext_resource type="Script" uid="uid://blkyu8v8rpjlj" path="res://Scenes/Entities/Enemies/Swordsman/Types/basic_swordsman.gd" id="2_dx6ih"]
+[ext_resource type="Resource" uid="uid://bf4j6wwh5p4lf" path="res://Resources/Weapon/BaseSword.tres" id="3_xfhsm"]
 [ext_resource type="Texture2D" uid="uid://d2qnynhbxi8s8" path="res://Assets/Swordsman/Hero swordsman Attack.png" id="4_0wnoo"]
+[ext_resource type="Resource" uid="uid://dwsfww5glec2a" path="res://Resources/Attack/base_light_attack.tres" id="4_pg4au"]
 [ext_resource type="Texture2D" uid="uid://ebavxtbxfpey" path="res://Assets/Swordsman/Hero swordsman idle.png" id="5_xfhsm"]
 [ext_resource type="Texture2D" uid="uid://hu3cl40pokma" path="res://Assets/Swordsman/Hero swordsman Run.png" id="6_pg4au"]
 
@@ -143,7 +145,10 @@ animations = [{
 collision_layer = 65538
 script = ExtResource("2_dx6ih")
 can_dodge = true
+current_weapon = ExtResource("3_xfhsm")
+enemy_attack = ExtResource("4_pg4au")
 move_speed = 50.0
+enemy_type = "swordsman"
 
 [node name="HurtBoxComponent" parent="." index="0"]
 collision_layer = 65536

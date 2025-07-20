@@ -4,9 +4,11 @@
 
 [resource]
 script = ExtResource("1_j2bgt")
-damage = 15.0
+damage = 5.0
 type = 0
-range = 20.0
-knockback_force = 0.0
+range = 10.0
+knockback_force = 2.0
 animation_name = "light_attack"
+can_be_parried = true
+can_be_dodged = true
 metadata/_custom_type_script = "uid://bt2stluxt8sqw"
