@@ -26,9 +26,10 @@ var canAttack : bool = true
 @onready var shell_timer: Timer = $"Shell Timer"
 @onready var hitbox: HitBoxComponent = $HitBoxComponent
 @onready var Hurtbox_component : HurtBoxComponent = $HurtBoxComponent
+@onready var HurtBox_CollisionShape : CollisionShape2D = $HurtBoxComponent/CollisionShape2D
+@onready var HitBox_CollisionShape : CollisionShape2D = $HitBoxComponent/CollisionShape2D
+@onready var progress_bar : TextureProgressBar = $Control/TextureProgressBar
 
-func OnAttack() -> void:
-	pass
 
 func Take_Damage(Power : float) -> void:
 	if canAttack:
@@ -36,11 +37,15 @@ func Take_Damage(Power : float) -> void:
 		gotAttacked = true
 		
 func Game_Loop() -> void:
+	randomize()
+	
 	if Health <= 0:
 		current_state = EnemyState.DEATH
 	
 	match current_state:
 		EnemyState.SHELLIN:
+			HurtBox_CollisionShape.set_deferred("disable",true)
+			HitBox_CollisionShape.set_deferred("disable",true)
 			direction = Vector2.ZERO
 			canAttack = false
 			Animations.play("shell_in")
@@ -49,6 +54,8 @@ func Game_Loop() -> void:
 			current_state = EnemyState.IDLE
 			
 		EnemyState.SHELLOUT:
+			HurtBox_CollisionShape.set_deferred("disable",false)
+			HitBox_CollisionShape.set_deferred("disable",false)
 			direction = Vector2.ZERO
 			Animations.play("shell_out")
 			await Animations.animation_finished
@@ -92,6 +99,9 @@ func Game_Loop() -> void:
 func _ready() -> void:
 	movement_timer.start()
 	
+	progress_bar.max_value = Health
+	progress_bar.value = Health
+	
 	$"Detection Area".body_entered.connect(
 		func(body: CharacterBody2D):
 			player = body
@@ -113,10 +123,12 @@ func _physics_process(_delta: float) -> void:
 		Animations.flip_h = false
 
 func _process(_delta: float) -> void:
+	progress_bar.value = Health
 	if Game_State:
 		Game_State = false
-	Game_Loop()
+		Game_Loop()
 
 func _on_hurt_box_component_area_entered(area: Area2D) -> void:
+	hitbox.damage = randi_range(1,10)
 	hitbox.knockback_direction.x = (area.get_parent().global_position - self.global_position).normalized().x
 	area.get_parent().Hurtbox_component.take_hit(hitbox)

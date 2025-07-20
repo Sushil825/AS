@@ -78,17 +78,14 @@ func setup_drop():
 
 
 func _physics_process(delta: float) -> void:
-	
-	
 	pass
 	
-
 
 func _on_body_entered(body):
 	print("Body")
 	
 	if body.has_method("collect_drop"):
-		body.collect_drop(drop_type)
+		body.collect_drop(drop_type, drop_data[drop_type]["texture"])
 		
 	queue_free()
 		

@@ -24,15 +24,17 @@ var gotAttacked : bool = false
 @onready var detection_area: CollisionShape2D = $"Detection Area/CollisionShape2D"
 @onready var hitbox: HitBoxComponent = $HitBoxComponent
 @onready var Hurtbox_component : HurtBoxComponent = $HurtBoxComponent
+@onready var HurtBox_CollisionShape : CollisionShape2D = $HurtBoxComponent/CollisionShape2D
+@onready var HitBox_CollisionShape : CollisionShape2D = $HitBoxComponent/CollisionShape2D
+@onready var progress_bar : TextureProgressBar = $Control/TextureProgressBar
 
-func OnAttack() -> void:
-	pass
 
 func Take_Damage(Power : float) -> void:
 	Health -= Power
 	gotAttacked = true
 		
 func Game_Loop() -> void:
+	randomize()
 	
 	if Health <= 0:
 		current_state = EnemyState.DEATH
@@ -62,12 +64,16 @@ func Game_Loop() -> void:
 			current_state = EnemyState.TAKEDAMAGE if gotAttacked else current_state
 		
 		EnemyState.TAKEDAMAGE:
+			HurtBox_CollisionShape.set_deferred("disable",true)
+			HitBox_CollisionShape.set_deferred("disable",true)
 			direction = Vector2.ZERO
 			gotAttacked = false
 			await get_tree().create_timer(1).timeout
 			Animations.play("hit")
 			await Animations.animation_finished
 			current_state = EnemyState.IDLE
+			HurtBox_CollisionShape.set_deferred("disable",true)
+			HitBox_CollisionShape.set_deferred("disable",true)
 		
 		EnemyState.WALK:
 			randomize()
@@ -83,6 +89,9 @@ func Game_Loop() -> void:
 
 func _ready() -> void:
 	movement_timer.start()
+	
+	progress_bar.max_value = Health
+	progress_bar.value = Health
 	
 	$"Detection Area".body_entered.connect(
 		func(body: CharacterBody2D):
@@ -105,10 +114,12 @@ func _physics_process(_delta: float) -> void:
 		Animations.flip_h = false
 
 func _process(_delta: float) -> void:
+	progress_bar.value = Health
 	if Game_State:
 		Game_State = false
-	Game_Loop()
+		Game_Loop()
 
 func _on_hurt_box_component_area_entered(area: Area2D) -> void:
+	hitbox.damage = randi_range(1,10)
 	hitbox.knockback_direction.x = (area.get_parent().global_position - self.global_position).normalized().x
 	area.get_parent().Hurtbox_component.take_hit(hitbox)

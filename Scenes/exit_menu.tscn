@@ -1,0 +1,163 @@
+[gd_scene load_steps=9 format=3 uid="uid://cw66aaj3wthu0"]
+
+[ext_resource type="FontFile" uid="uid://crmtpi24jr05w" path="res://Assets/Font/Caudex-Regular.ttf" id="1_pauut"]
+[ext_resource type="FontFile" uid="uid://baea3ruvouqcc" path="res://Assets/Font/IMFellEnglishSC-Regular.ttf" id="1_snfdo"]
+[ext_resource type="Script" uid="uid://cmugcgctmmpsk" path="res://Scenes/exit_menu.gd" id="1_tjq2o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qggex"]
+bg_color = Color(0.164706, 0.054902, 0.054902, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 6
+expand_margin_left = 12.0
+expand_margin_top = 12.0
+expand_margin_right = 12.0
+expand_margin_bottom = 12.0
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 6
+shadow_offset = Vector2(2, 4)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wp0da"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_50st8"]
+bg_color = Color(1, 0.878431, 0.4, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.266667, 0.266667, 0.266667, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 6
+expand_margin_left = 6.0
+expand_margin_top = 6.0
+expand_margin_right = 6.0
+expand_margin_bottom = 6.0
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ee1x"]
+bg_color = Color(0.831373, 0.666667, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.133333, 0.133333, 0.133333, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 6
+expand_margin_left = 6.0
+expand_margin_top = 6.0
+expand_margin_right = 6.0
+expand_margin_bottom = 6.0
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wl017"]
+bg_color = Color(1, 0.8, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 6
+expand_margin_left = 6.0
+expand_margin_top = 6.0
+expand_margin_right = 6.0
+expand_margin_bottom = 6.0
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_offset = Vector2(2, 2)
+
+[node name="Exit Menu" type="PanelContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(214, 122)
+offset_right = 214.0
+offset_bottom = 122.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qggex")
+script = ExtResource("1_tjq2o")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 0.933333, 0.666667, 1)
+theme_override_fonts/font = ExtResource("1_snfdo")
+text = "❓ QUIT GAME ❓"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Question" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 0.933333, 0.666667, 1)
+theme_override_fonts/font = ExtResource("1_snfdo")
+text = "Are you sure you want to exit?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Cancle" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(60, 25)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_colors/font_disabled_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_colors/font_hover_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_colors/font_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_colors/font_focus_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_colors/font_pressed_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_fonts/font = ExtResource("1_pauut")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wp0da")
+theme_override_styles/hover = SubResource("StyleBoxFlat_50st8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1ee1x")
+theme_override_styles/normal = SubResource("StyleBoxFlat_wl017")
+text = "Cancel"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(60, 25)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_colors/font_disabled_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_colors/font_hover_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_colors/font_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_colors/font_focus_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_colors/font_pressed_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_fonts/font = ExtResource("1_pauut")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wp0da")
+theme_override_styles/hover = SubResource("StyleBoxFlat_50st8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1ee1x")
+theme_override_styles/normal = SubResource("StyleBoxFlat_wl017")
+text = "Quit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Cancle" to="." method="_on_cancle_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Quit" to="." method="_on_quit_pressed"]

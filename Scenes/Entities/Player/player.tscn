@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://cou2lca40qdxl"]
+[gd_scene load_steps=69 format=3 uid="uid://cou2lca40qdxl"]
 
 [ext_resource type="Texture2D" uid="uid://pttpo6wfmcsq" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_4ffj5"]
 [ext_resource type="Script" uid="uid://dj0lg7bkycc4m" path="res://Scenes/Entities/Player/player.gd" id="1_rx582"]
@@ -27,6 +27,8 @@
 [ext_resource type="Texture2D" uid="uid://pjrvsq6wmsi0" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/GreenFill.png" id="20_o25qk"]
 [ext_resource type="Script" uid="uid://3v8t3ncv24s8" path="res://Scenes/Entities/Player/texture_progress_bar.gd" id="21_o25qk"]
 [ext_resource type="AudioStream" uid="uid://cll3kril36r80" path="res://Assets/Sounds/happy_adveture.mp3" id="27_50st8"]
+[ext_resource type="PackedScene" uid="uid://cw66aaj3wthu0" path="res://Scenes/exit_menu.tscn" id="28_1ee1x"]
+[ext_resource type="PackedScene" uid="uid://cbbfwqogx1bxw" path="res://Scenes/buff_display.tscn" id="30_sajyx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q8fdp"]
 atlas = ExtResource("2_i4twt")
@@ -430,6 +432,23 @@ texture_over = ExtResource("18_s4doi")
 texture_progress = ExtResource("20_o25qk")
 script = ExtResource("21_o25qk")
 health_component = NodePath("../../HealthComponent")
+
+[node name="Exit Menu" parent="HUD" instance=ExtResource("28_1ee1x")]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_left = -107.0
+offset_top = -61.0
+offset_right = 107.0
+offset_bottom = 61.0
+
+[node name="BuffDisplay" parent="HUD" instance=ExtResource("30_sajyx")]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -54.0
+offset_right = 32.0
+offset_bottom = -14.0
+scale = Vector2(0.4, 0.4)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 volume_db = -10.0

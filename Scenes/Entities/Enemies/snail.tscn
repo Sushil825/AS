@@ -1,10 +1,13 @@
-[gd_scene load_steps=43 format=3 uid="uid://cxgrpymmn2brt"]
+[gd_scene load_steps=46 format=3 uid="uid://cxgrpymmn2brt"]
 
 [ext_resource type="Script" uid="uid://bh1myr5dpj85l" path="res://Scenes/Entities/Enemies/snail.gd" id="1_6th1h"]
 [ext_resource type="Texture2D" uid="uid://c8slatie8dpnx" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Snail/walk-Sheet.png" id="1_ixyh5"]
 [ext_resource type="Texture2D" uid="uid://5norw43kd01d" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Snail/all.png" id="1_nkprn"]
 [ext_resource type="Script" uid="uid://dwn5s6v5no107" path="res://Scenes/Components/hit_box_component.gd" id="4_w42jn"]
 [ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="5_tps66"]
+[ext_resource type="Texture2D" uid="uid://pjrvsq6wmsi0" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/GreenFill.png" id="6_6mivv"]
+[ext_resource type="Texture2D" uid="uid://dmui46e8ib2q3" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/Fill.png" id="7_mow4p"]
+[ext_resource type="Texture2D" uid="uid://d0hmafbkdemhd" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/RedFill.png" id="8_cgj3o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yb5gh"]
 atlas = ExtResource("1_nkprn")
@@ -319,5 +322,21 @@ one_shot = true
 [node name="Shell Timer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = -32.0
+offset_top = -25.0
+offset_right = 32.0
+offset_bottom = 15.0
+texture_under = ExtResource("8_cgj3o")
+texture_over = ExtResource("7_mow4p")
+texture_progress = ExtResource("6_6mivv")
 
 [connection signal="area_entered" from="HurtBoxComponent" to="." method="_on_hurt_box_component_area_entered"]

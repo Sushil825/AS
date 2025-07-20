@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://sja4gr0plns4"]
+[gd_scene load_steps=27 format=3 uid="uid://sja4gr0plns4"]
 
 [ext_resource type="Texture2D" uid="uid://dtnmem8b1576e" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Small Bee/Attack/Attack-Sheet.png" id="1_a0lnj"]
 [ext_resource type="Texture2D" uid="uid://cjr8vdj6qehdn" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Small Bee/Fly/Fly-Sheet.png" id="1_bogrk"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://bo1rb3agqtj0q" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Small Bee/Hit/Hit-Sheet.png" id="3_mk7hq"]
 [ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="4_wihui"]
 [ext_resource type="Script" uid="uid://dwn5s6v5no107" path="res://Scenes/Components/hit_box_component.gd" id="5_gv4wh"]
+[ext_resource type="Texture2D" uid="uid://d0hmafbkdemhd" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/RedFill.png" id="7_tihq5"]
+[ext_resource type="Texture2D" uid="uid://dmui46e8ib2q3" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/Fill.png" id="8_ngixl"]
+[ext_resource type="Texture2D" uid="uid://pjrvsq6wmsi0" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/GreenFill.png" id="9_5ntsh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gv4wh"]
 atlas = ExtResource("1_a0lnj")
@@ -172,6 +175,23 @@ wait_time = 2.5
 [node name="Attack Delay" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = -32.0
+offset_top = -25.0
+offset_right = 32.0
+offset_bottom = 15.0
+step = 0.1
+texture_under = ExtResource("7_tihq5")
+texture_over = ExtResource("8_ngixl")
+texture_progress = ExtResource("9_5ntsh")
 
 [connection signal="body_entered" from="Detection Area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="Detection Area" to="." method="_on_detection_area_body_exited"]

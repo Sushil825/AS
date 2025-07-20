@@ -6,7 +6,5 @@ func _ready() -> void:
 	self.max_value = health_component.max_health
 	self.value = self.max_value
 	
-	health_component.health_changed.connect(
-		func(current_health: int, max_health: int):
-			self.value = current_health
-	)
+func _process(delta: float) -> void:
+	self.value = health_component.current_health

@@ -349,4 +349,3 @@ func _process(delta: float) -> void:
 func Take_Damage(Power : float) -> void:
 	health_component.take_damage(Power)
 	hurt_box_component.create_hit_effect()
-	print(health_component.current_health)

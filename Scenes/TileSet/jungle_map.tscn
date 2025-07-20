@@ -47,7 +47,6 @@ position = Vector2(1014, 494)
 position = Vector2(117, 316)
 
 [node name="SwordsmanBase" parent="Main" instance=ExtResource("8_vrcvg")]
-modulate = Color(1, 0.443137, 0.270588, 0.878431)
 position = Vector2(695, 514)
 
 [node name="Forground" type="Node2D" parent="."]
