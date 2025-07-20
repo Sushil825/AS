@@ -175,8 +175,8 @@ animations = [{
 radius = 15.0
 height = 42.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_e8n2y"]
-radius = 100.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e8n2y"]
+size = Vector2(200, 20)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0i6wj"]
 radius = 21.3776
@@ -206,7 +206,7 @@ collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection Area"]
 position = Vector2(-8, 0)
-shape = SubResource("CircleShape2D_e8n2y")
+shape = SubResource("RectangleShape2D_e8n2y")
 debug_color = Color(0.490196, 0.435294, 0.509804, 0.419608)
 
 [node name="HitBoxComponent" type="Area2D" parent="."]

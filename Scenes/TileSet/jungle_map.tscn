@@ -7,10 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://sja4gr0plns4" path="res://Scenes/Entities/Enemies/small_bee.tscn" id="4_tgldr"]
 [ext_resource type="PackedScene" uid="uid://cxgrpymmn2brt" path="res://Scenes/Entities/Enemies/snail.tscn" id="5_go8p0"]
 [ext_resource type="PackedScene" uid="uid://voyfmt3j2sk1" path="res://Scenes/Entities/Enemies/boar.tscn" id="6_cxiej"]
-[ext_resource type="PackedScene" uid="uid://bgfyrna8xchsg" path="res://Scenes/Entities/Enemies/Swordsman/Types/basic_swordsman.tscn" id="8_vrcvg"]
+[ext_resource type="PackedScene" uid="uid://dj5s20fif1pre" path="res://Scenes/player_died.tscn" id="8_vrcvg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vrcvg"]
-size = Vector2(65.5, 65)
+size = Vector2(63, 44)
 
 [node name="Level 1" type="Node2D"]
 script = ExtResource("1_cxiej")
@@ -57,11 +57,11 @@ tile_map_data = PackedByteArray("AAANABYAAAAKAAIAAAANABcAAAAKAAMAAAANABgAAAAKAAQ
 collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Change_Scene"]
-position = Vector2(1161, 25)
+position = Vector2(1119.5, 38)
 shape = SubResource("RectangleShape2D_vrcvg")
 
-[node name="SwordsmanBase" parent="." instance=ExtResource("8_vrcvg")]
-position = Vector2(252, 561)
-collision_layer = 2
+[node name="Player_Died" parent="." instance=ExtResource("8_vrcvg")]
+layer = 3
+visible = false
 
 [connection signal="body_entered" from="Change_Scene" to="." method="_on_change_scene_body_entered"]
