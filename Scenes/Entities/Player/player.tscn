@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://cou2lca40qdxl"]
+[gd_scene load_steps=66 format=3 uid="uid://cou2lca40qdxl"]
 
 [ext_resource type="Texture2D" uid="uid://pttpo6wfmcsq" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_4ffj5"]
 [ext_resource type="Script" uid="uid://dj0lg7bkycc4m" path="res://Scenes/Entities/Player/player.gd" id="1_rx582"]
@@ -26,7 +26,6 @@
 [ext_resource type="Texture2D" uid="uid://dmui46e8ib2q3" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/Fill.png" id="18_s4doi"]
 [ext_resource type="Texture2D" uid="uid://pjrvsq6wmsi0" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/GreenFill.png" id="20_o25qk"]
 [ext_resource type="Script" uid="uid://3v8t3ncv24s8" path="res://Scenes/Entities/Player/texture_progress_bar.gd" id="21_o25qk"]
-[ext_resource type="PackedScene" uid="uid://b56kh01s2ostv" path="res://buff.tscn" id="27_50st8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q8fdp"]
 atlas = ExtResource("2_i4twt")
@@ -327,6 +326,90 @@ height = 56.0
 radius = 11.0
 height = 50.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mt20e"]
+bg_color = Color(0.164706, 0.054902, 0.054902, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 6
+expand_margin_left = 12.0
+expand_margin_top = 12.0
+expand_margin_right = 12.0
+expand_margin_bottom = 12.0
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 6
+shadow_offset = Vector2(2, 4)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wl017"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_50st8"]
+bg_color = Color(1, 0.878431, 0.4, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.266667, 0.266667, 0.266667, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 6
+expand_margin_left = 6.0
+expand_margin_top = 6.0
+expand_margin_right = 6.0
+expand_margin_bottom = 6.0
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ee1x"]
+bg_color = Color(0.831373, 0.666667, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.133333, 0.133333, 0.133333, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 6
+expand_margin_left = 6.0
+expand_margin_top = 6.0
+expand_margin_right = 6.0
+expand_margin_bottom = 6.0
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wl017"]
+bg_color = Color(1, 0.8, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 6
+expand_margin_left = 6.0
+expand_margin_top = 6.0
+expand_margin_right = 6.0
+expand_margin_bottom = 6.0
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sajyx"]
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 texture_filter = 1
 collision_mask = 134
@@ -413,11 +496,11 @@ metadata/_custom_type_script = "uid://c0aresow0k4hg"
 [node name="CameraComponent" parent="." instance=ExtResource("17_oedhw")]
 position_smoothing_enabled = false
 
-[node name="Control" type="Control" parent="."]
+[node name="HUD" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Control" node_paths=PackedStringArray("health_component")]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HUD" node_paths=PackedStringArray("health_component")]
 layout_mode = 0
 offset_left = -32.0
 offset_top = -40.0
@@ -429,10 +512,7 @@ texture_progress = ExtResource("20_o25qk")
 script = ExtResource("21_o25qk")
 health_component = NodePath("../../HealthComponent")
 
-[node name="Buff" parent="Control" instance=ExtResource("27_50st8")]
-offset_left = -18.0
-offset_top = -76.0
-offset_right = 22.0
-offset_bottom = -36.0
-
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="pressed" from="HUD/Quit Menu/MarginContainer/VBoxContainer/HBoxContainer/Quit" to="HUD/Quit Menu" method="_on_quit_pressed"]
+[connection signal="pressed" from="HUD/Quit Menu/MarginContainer/VBoxContainer/HBoxContainer/Cancle" to="HUD/Quit Menu" method="_on_button_pressed"]
