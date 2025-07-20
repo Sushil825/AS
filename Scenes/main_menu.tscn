@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://fkdfv3m8rmkn"]
+[gd_scene load_steps=22 format=4 uid="uid://fkdfv3m8rmkn"]
 
 [ext_resource type="Script" uid="uid://ceuy0ce0hl4px" path="res://Scenes/main_menu.gd" id="1_1ehe0"]
 [ext_resource type="FontFile" uid="uid://baea3ruvouqcc" path="res://Assets/Font/IMFellEnglishSC-Regular.ttf" id="1_48xlc"]
@@ -165,18 +165,6 @@ corner_radius_bottom_left = 12
 shadow_color = Color(0, 0, 0, 1)
 shadow_size = 4
 shadow_offset = Vector2(2, 3)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhxw7"]
-bg_color = Color(0.101961, 0.101961, 0.101961, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.533333, 0.533333, 0.533333, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trj04"]
 bg_color = Color(0.0666667, 0.0666667, 0.0666667, 1)
@@ -373,6 +361,7 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Instructions Panel/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 15
 
 [node name="Label" type="Label" parent="Instructions Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -385,25 +374,6 @@ text = "Instructions"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="Instructions Panel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-theme_override_colors/font_color = Color(0.866667, 0.866667, 0.866667, 1)
-theme_override_fonts/font = ExtResource("2_1ehe0")
-theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_yhxw7")
-text = "🎮 Controls:
-
-← → : Move
-Space : Jump
-j : Light Attack
-k: Heavy Attack
-shift : Dash
-q : Toggle quit menu"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Label3" type="Label" parent="Instructions Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -411,13 +381,21 @@ theme_override_colors/font_color = Color(1, 0.933333, 0.666667, 1)
 theme_override_fonts/font = ExtResource("2_1ehe0")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_trj04")
-text = "🏹 Objective:
+text = "🎮 Controls:
+← → : Move
+Space : Jump
+J : Light Attack
+K: Heavy Attack
+shift : Dash
+Q : Toggle quit menu
 
+🏹 Objective:
 Defeat enemies, avoid hazards, and reach the rock to complete the level."
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Toggle Instructions" type="Button" parent="Instructions Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6

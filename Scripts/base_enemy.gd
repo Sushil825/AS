@@ -39,15 +39,16 @@ func die():
 	
 	
 func spawn_drop():
+	randomize()
 	
 	var possible_drops=drop_chances.get(enemy_type,[])
 	
 	for drop_data in possible_drops:
 		
 		if randf()<=drop_data.chance:
-			print("dropped")
 			var drop=drop_scene.instantiate()
 			drop.drop_type=drop_data.type
 			drop.global_position=global_position+Vector2(0,-20)
 			get_parent().add_child(drop)
+			break
 			

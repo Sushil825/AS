@@ -11,6 +11,9 @@ enum states
 @onready var Animations : AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox: HitBoxComponent = $HitBoxComponent
 @onready var Hurtbox_component : HurtBoxComponent = $HurtBoxComponent
+@onready var HurtBox_CollisionShape : CollisionShape2D = $HurtBoxComponent/CollisionShape2D
+@onready var HitBox_CollisionShape : CollisionShape2D = $HitBoxComponent/CollisionShape2D
+@onready var progress_bar : TextureProgressBar = $Control/TextureProgressBar
 
 var health : float = 125
 var direction : Vector2 = Vector2.LEFT
@@ -28,13 +31,19 @@ var player : CharacterBody2D = null
 func _ready() -> void:
 	$"Movement Timer".start()
 	$"Attack Delay".start()
+	
+	progress_bar.max_value = health
+	progress_bar.value = health
 
 func _physics_process(_delta: float) -> void:
+	progress_bar.value = health
 	if GameLoop:
 		GameLoop = false
 		Enemy_States()
 
 func Enemy_States() -> void:
+	randomize()
+	
 	if health <= 0:
 		current_state = states.death
 	elif takeDamage:
@@ -68,14 +77,19 @@ func Enemy_States() -> void:
 			canAttack = false
 			$"Attack Delay".start()
 			if player:
+				hitbox.damage = randi_range(1,10)
 				hitbox.knockback_direction.x = (player.global_position - self.global_position).normalized().x
 				player.Hurtbox_component.take_hit(hitbox)
 			await Animations.animation_finished
 			
 		states.take_damage:
+			HurtBox_CollisionShape.set_deferred("disable",true)
+			HitBox_CollisionShape.set_deferred("disable",true)
 			takeDamage = false
 			Animations.play("hit")
 			await Animations.animation_finished
+			HurtBox_CollisionShape.set_deferred("disable",true)
+			HitBox_CollisionShape.set_deferred("disable",true)
 			
 		states.death:
 			Animations.play("hit")

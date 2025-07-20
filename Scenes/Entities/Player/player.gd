@@ -21,10 +21,12 @@ enum PlayerState{
 @onready var Hurtbox_component : HurtBoxComponent = $HurtBoxComponent
 @onready var hitbox : HitBoxComponent = $HitBoxComponent
 @onready var healthComponent : HealthComponent = $HealthComponent
+@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var buff_display: Panel = $HUD/BuffDisplay
+
 
 @export var direction: Vector2 = Vector2.ZERO
 @export var debug_mode:bool=false
-@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 
 
@@ -59,8 +61,8 @@ func play_audio(audio_stream: AudioStream):
 		audio_player.stream = audio_stream
 		audio_player.play()
 
-func collect_drop(drop_type:DropItem.DropType):
-	BuffManager.apply_buff(drop_type,self)
+func collect_drop(drop_type:DropItem.DropType, image: CompressedTexture2D):
+	BuffManager.apply_buff(drop_type,self,image)
 
 
 func heal(amount:float):

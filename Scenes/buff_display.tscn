@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbbfwqogx1bxw"]
+
+[ext_resource type="Script" uid="uid://b24f8ir1ffhne" path="res://Scenes/buff_display.gd" id="1_xgkbf"]
+[ext_resource type="FontFile" uid="uid://crmtpi24jr05w" path="res://Assets/Font/Caudex-Regular.ttf" id="2_b80f7"]
+[ext_resource type="Texture2D" uid="uid://criix48y0dpak" path="res://Assets/buffs/shield.png" id="2_xgkbf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b80f7"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 0.8, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.101961, 0.101961, 0.101961, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_offset = Vector2(1, 1)
+
+[node name="BuffDisplay" type="Panel"]
+custom_minimum_size = Vector2(40, 40)
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_b80f7")
+script = ExtResource("1_xgkbf")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_xgkbf")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_b80f7")
+theme_override_font_sizes/font_size = 30
+text = "9"
+horizontal_alignment = 1
+vertical_alignment = 1

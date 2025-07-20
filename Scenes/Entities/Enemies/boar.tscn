@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://voyfmt3j2sk1"]
+[gd_scene load_steps=36 format=3 uid="uid://voyfmt3j2sk1"]
 
 [ext_resource type="Script" uid="uid://7v1lcs5phk47" path="res://Scenes/Entities/Enemies/boar.gd" id="1_0i6wj"]
 [ext_resource type="Texture2D" uid="uid://distxn11b6lk4" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Boar/Hit-Vanish/Hit-Sheet.png" id="1_opvx1"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://45u6fkbdluf6" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Mob/Boar/Walk/Walk-Base-Sheet.png" id="4_e8n2y"]
 [ext_resource type="Script" uid="uid://dwn5s6v5no107" path="res://Scenes/Components/hit_box_component.gd" id="5_76bem"]
 [ext_resource type="Script" uid="uid://cbljtbydq410e" path="res://Scenes/Components/hurt_box_component.gd" id="7_e8n2y"]
+[ext_resource type="Texture2D" uid="uid://pjrvsq6wmsi0" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/GreenFill.png" id="8_88bwm"]
+[ext_resource type="Texture2D" uid="uid://dmui46e8ib2q3" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/Fill.png" id="9_gvylo"]
+[ext_resource type="Texture2D" uid="uid://d0hmafbkdemhd" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/RedFill.png" id="10_kllcg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hmne4"]
 atlas = ExtResource("1_opvx1")
@@ -234,5 +237,21 @@ debug_color = Color(0.866667, 0.305882, 0.482353, 0.419608)
 [node name="Movement Timer" type="Timer" parent="."]
 wait_time = 2.5
 one_shot = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = -32.0
+offset_top = -25.0
+offset_right = 32.0
+offset_bottom = 15.0
+texture_under = ExtResource("10_kllcg")
+texture_over = ExtResource("9_gvylo")
+texture_progress = ExtResource("8_88bwm")
 
 [connection signal="area_entered" from="HurtBoxComponent" to="." method="_on_hurt_box_component_area_entered"]

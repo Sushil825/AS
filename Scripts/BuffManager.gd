@@ -6,12 +6,17 @@ signal  buff_expired(buff_name:String)
 
 
 var active_buffs={}
+var buffTimer : Timer = null
+var Player : CharacterBody2D = null
 
+func _process(delta: float) -> void:
+	if buffTimer and !buffTimer.is_stopped():
+		Player.buff_display.setText(buffTimer.time_left)
 
-func apply_buff(buff_type:DropItem.DropType,player):
+func apply_buff(buff_type:DropItem.DropType, player :CharacterBody2D , image:CompressedTexture2D):
+	
 	var data=DropItem.new().drop_data[buff_type]
 	var buff_name=data.name
-	
 	
 	if active_buffs.has(buff_name):
 		remove_buff(buff_name,player)
@@ -40,6 +45,10 @@ func apply_buff(buff_type:DropItem.DropType,player):
 	if data.duration>0:
 		var timer=Timer.new()
 		add_child(timer)
+		buffTimer = timer
+		Player = player
+		Player.buff_display.ToggleVisibility(true)
+		Player.buff_display.setTexture(image)
 		timer.wait_time=data.duration
 		timer.one_shot=true
 		timer.timeout.connect(_on_buff_expired.bind(buff_name,player,timer))
@@ -49,7 +58,10 @@ func apply_buff(buff_type:DropItem.DropType,player):
 
 
 
-func remove_buff(buff_name:String,player):
+func remove_buff(buff_name:String, player:CharacterBody2D):
+	Player.buff_display.ToggleVisibility(false)
+	buffTimer = null
+	Player = null
 	
 	if not active_buffs.has(buff_name):
 		return
