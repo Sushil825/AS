@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo16tdmdnbl3q"]
+
+[ext_resource type="Script" uid="uid://b2w4jvccftis5" path="res://Scenes/Components/drop_item.gd" id="1_2jhkm"]
+[ext_resource type="Texture2D" uid="uid://cfbrsejcrvbwf" path="res://Assets/buffs/speed.png" id="2_qddv2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bpihx"]
+size = Vector2(38, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qddv2"]
+size = Vector2(54, 43)
+
+[node name="DropItem" type="RigidBody2D"]
+collision_layer = 128
+collision_mask = 5
+script = ExtResource("1_2jhkm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_qddv2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 2)
+shape = SubResource("RectangleShape2D_bpihx")
+
+[node name="Detect" type="Area2D" parent="."]
+collision_layer = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detect"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_qddv2")
+debug_color = Color(0.791257, 0.394721, 0.447789, 0.42)

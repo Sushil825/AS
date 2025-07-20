@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://cou2lca40qdxl"]
+[gd_scene load_steps=67 format=3 uid="uid://cou2lca40qdxl"]
 
 [ext_resource type="Texture2D" uid="uid://pttpo6wfmcsq" path="res://Assets/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_4ffj5"]
 [ext_resource type="Script" uid="uid://dj0lg7bkycc4m" path="res://Scenes/Entities/Player/player.gd" id="1_rx582"]
@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://dmui46e8ib2q3" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/Fill.png" id="18_s4doi"]
 [ext_resource type="Texture2D" uid="uid://pjrvsq6wmsi0" path="res://Assets/Legacy-Fantasy - High Forest 2.3/HUD/GreenFill.png" id="20_o25qk"]
 [ext_resource type="Script" uid="uid://3v8t3ncv24s8" path="res://Scenes/Entities/Player/texture_progress_bar.gd" id="21_o25qk"]
+[ext_resource type="PackedScene" uid="uid://b56kh01s2ostv" path="res://buff.tscn" id="27_50st8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q8fdp"]
 atlas = ExtResource("2_i4twt")
@@ -328,7 +329,7 @@ height = 50.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 texture_filter = 1
-collision_mask = 6
+collision_mask = 134
 script = ExtResource("1_rx582")
 light_attack_audio = ExtResource("2_mt20e")
 heavy_attack_audio = ExtResource("3_50st8")
@@ -427,5 +428,11 @@ texture_over = ExtResource("18_s4doi")
 texture_progress = ExtResource("20_o25qk")
 script = ExtResource("21_o25qk")
 health_component = NodePath("../../HealthComponent")
+
+[node name="Buff" parent="Control" instance=ExtResource("27_50st8")]
+offset_left = -18.0
+offset_top = -76.0
+offset_right = 22.0
+offset_bottom = -36.0
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

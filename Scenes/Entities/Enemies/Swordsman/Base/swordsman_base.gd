@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Enemy
 
 
 enum ENEMYSTATE{
@@ -320,7 +320,7 @@ func _on_health_changed(old_health:float,new_health:float):
 	
 func _on_died():
 	enemy_died.emit()
-	queue_free()
+	die()
 
 func _on_movement_started():
 	pass

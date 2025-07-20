@@ -1,0 +1,27 @@
+[gd_scene load_steps=8 format=3 uid="uid://b56kh01s2ostv"]
+
+[ext_resource type="Script" uid="uid://c4d17bikdg1rb" path="res://Scenes/UI/BuffDisplay.gd" id="1_vhsdr"]
+[ext_resource type="Texture2D" uid="uid://cfbrsejcrvbwf" path="res://Assets/buffs/speed.png" id="2_3es6q"]
+[ext_resource type="Texture2D" uid="uid://ddrnwvlaqtbi" path="res://Assets/buffs/HQ fireball.png" id="3_twukd"]
+[ext_resource type="Texture2D" uid="uid://b8rap6x3x7w76" path="res://Assets/buffs/jump.png" id="4_343vq"]
+[ext_resource type="Texture2D" uid="uid://criix48y0dpak" path="res://Assets/buffs/shield.png" id="5_ive4x"]
+[ext_resource type="Texture2D" uid="uid://d1t7nl5lkk12w" path="res://Assets/buffs/life.png" id="6_nsdne"]
+[ext_resource type="Texture2D" uid="uid://bdvnw7eqgn88t" path="res://Assets/buffs/double_jump.png" id="7_7wmib"]
+
+[node name="Buff" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_vhsdr")
+speed_boost_icon = ExtResource("2_3es6q")
+fireball_icon = ExtResource("3_twukd")
+jump_boost_icon = ExtResource("4_343vq")
+shield_icon = ExtResource("5_ive4x")
+health_icon = ExtResource("6_nsdne")
+double_jump_icon = ExtResource("7_7wmib")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

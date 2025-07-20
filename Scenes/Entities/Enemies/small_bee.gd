@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Enemy
 
 enum states
 {
@@ -80,7 +80,7 @@ func Enemy_States() -> void:
 		states.death:
 			Animations.play("hit")
 			await Animations.animation_finished
-			call_deferred("queue_free")
+			die()
 	
 	GameLoop = true
 			

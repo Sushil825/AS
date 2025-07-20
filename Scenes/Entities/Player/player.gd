@@ -26,6 +26,15 @@ enum PlayerState{
 @export var debug_mode:bool=false
 @onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
+
+
+var speed_multiplier:float=1.0
+var jump_mult:float=1.0
+var has_fireball:bool=false
+var has_shield:bool=false
+var has_double_jump:bool=false
+var jump_remaining:int=1
+
 var prev_dir=Vector2.RIGHT
 var current_state:PlayerState=PlayerState.IDLE
 var previous_state:PlayerState=PlayerState.IDLE
@@ -47,6 +56,13 @@ func play_audio(audio_stream: AudioStream):
 		audio_player.stream = audio_stream
 		audio_player.play()
 
+func collect_drop(drop_type:DropItem.DropType):
+	BuffManager.apply_buff(drop_type,self)
+
+
+func heal(amount:float):
+	healthComponent.heal(amount)
+
 func _ready() -> void:
 	#Connect all the signal from the components
 	attack_component.attack_performed.connect(_on_attack_performed)
@@ -61,7 +77,6 @@ func _ready() -> void:
 	healthComponent.died.connect(func(): call_deferred("queue_free"))
 
 func _physics_process(_delta: float) -> void:
-	
 	_get_input_direction()
 	if debug_mode:
 		print("Current_State: ",PlayerState.keys()[current_state],
@@ -180,6 +195,7 @@ func _input(event: InputEvent) -> void:
 				if dash_component.can_dash:
 					change_state(PlayerState.DASHING)
 					dash_component.perform_dash(prev_dir)
+			
 
 #Handling Idle state
 

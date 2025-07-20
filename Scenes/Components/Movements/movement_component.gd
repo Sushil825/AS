@@ -72,7 +72,7 @@ func _process(delta: float) -> void:
 	
 	#motion in x axis
 	if direction.x:
-		Player.velocity.x = move_toward(Player.velocity.x , direction.x * speed , acceleration * delta)
+		Player.velocity.x = move_toward(Player.velocity.x , direction.x * speed*Player.speed_multiplier , acceleration * delta)
 	else:
 		Player.velocity.x = move_toward(Player.velocity.x, 0, friction * delta)
 	

@@ -66,6 +66,8 @@ position = Vector2(252, 561)
 collision_layer = 2
 
 [node name="DropItem" parent="." instance=ExtResource("9_gkpjs")]
-position = Vector2(118, 492)
+position = Vector2(137, 446)
+drop_type = null
+bounce_heigh = null
 
 [connection signal="body_entered" from="Change_Scene" to="." method="_on_change_scene_body_entered"]

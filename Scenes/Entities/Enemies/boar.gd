@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Enemy
 
 enum EnemyState
 {
@@ -42,7 +42,7 @@ func Game_Loop() -> void:
 			direction = Vector2.ZERO
 			Animations.play("hit")
 			await Animations.animation_finished
-			call_deferred("queue_free")
+			die()
 		
 		EnemyState.RUN:
 			speed = 100
